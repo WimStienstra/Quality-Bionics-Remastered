@@ -1,0 +1,5 @@
+c:\Games\Rimworld\Mods\QualityBionics\1.2\Assemblies\QualityBionics.dll
+c:\Games\Rimworld\Mods\QualityBionics\1.2\Source\QualityBionics\QualityBionics\obj\Debug\QualityBionics.csproj.AssemblyReference.cache
+c:\Games\Rimworld\Mods\QualityBionics\1.2\Source\QualityBionics\QualityBionics\obj\Debug\QualityBionics.csproj.CoreCompileInputs.cache
+c:\Games\Rimworld\Mods\QualityBionics\1.2\Source\QualityBionics\QualityBionics\obj\Debug\QualityBionics.csproj.CopyComplete
+c:\Games\Rimworld\Mods\QualityBionics\1.2\Source\QualityBionics\QualityBionics\obj\Debug\QualityBionics.dll
