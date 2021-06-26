@@ -508,11 +508,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Games\\Rimworld\\Mods\\QualityBionics\\1.2\\Source\\QualityBionics\\QualityBionics\\QualityBionics.csproj",
+      "projectUniqueName": "C:\\Games\\Rimworld\\Mods\\Quality-Bionics\\1.2\\Source\\QualityBionics\\QualityBionics\\QualityBionics.csproj",
       "projectName": "QualityBionics",
-      "projectPath": "c:\\Games\\Rimworld\\Mods\\QualityBionics\\1.2\\Source\\QualityBionics\\QualityBionics\\QualityBionics.csproj",
+      "projectPath": "C:\\Games\\Rimworld\\Mods\\Quality-Bionics\\1.2\\Source\\QualityBionics\\QualityBionics\\QualityBionics.csproj",
       "packagesPath": "C:\\Users\\Vova\\.nuget\\packages\\",
-      "outputPath": "c:\\Games\\Rimworld\\Mods\\QualityBionics\\1.2\\Source\\QualityBionics\\QualityBionics\\obj\\",
+      "outputPath": "C:\\Games\\Rimworld\\Mods\\Quality-Bionics\\1.2\\Source\\QualityBionics\\QualityBionics\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OYP2NVWSDWXeM4lRo/y480VFECeHsgG5lHr6IC3eYMMKmh+yaMgtqn4RPSQYdHO5DrHAnC2q4JZr2UdFxt2R9Q==",
+  "dgSpecHash": "Xi/0S0YVpbyfMZwcMz72AewJpG7OGGBjGxU16V0qDXWkZzN7Lvi6DYhuI/oipVaUC2G+gf6TU45oHgzz1ZRRMg==",
   "success": true,
-  "projectFilePath": "c:\\Games\\Rimworld\\Mods\\QualityBionics\\1.2\\Source\\QualityBionics\\QualityBionics\\QualityBionics.csproj",
+  "projectFilePath": "C:\\Games\\Rimworld\\Mods\\Quality-Bionics\\1.2\\Source\\QualityBionics\\QualityBionics\\QualityBionics.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Vova\\.nuget\\packages\\krafs.rimworld.ref\\1.2.2905\\krafs.rimworld.ref.1.2.2905.nupkg.sha512",
     "C:\\Users\\Vova\\.nuget\\packages\\lib.harmony\\2.0.4\\lib.harmony.2.0.4.nupkg.sha512"

@@ -19,6 +19,7 @@ namespace QualityBionics
         {
             harmony = new Harmony("QualityBionics.Mod");
             harmony.PatchAll();
+            var prefix = typeof(HarmonyContainer).GetMethod("ApplyOnPawnPrefix");
             var postfix = typeof(HarmonyContainer).GetMethod("ApplyOnPawnPostfix");
             var baseType = typeof(RecipeWorker);
             var types = baseType.AllSubclassesNonAbstract();
@@ -27,19 +28,69 @@ namespace QualityBionics
                 var method = cur.GetMethod("ApplyOnPawn");
                 try
                 {
-                    harmony.Patch(method, null, new HarmonyMethod(postfix));
+                    harmony.Patch(method, new HarmonyMethod(prefix), new HarmonyMethod(postfix));
                 }
                 catch (Exception ex)
                 {
                     //Log.Error("Error patching " + cur + " - " + method + " - " + ex);
                 }
             }
-
             AddQualityToImplants();
         }
+        public static void AddQualityToImplants()
+        {
+            foreach (var hediff in DefDatabase<HediffDef>.AllDefs)
+            {
+                if (hediff.spawnThingOnRemoved != null && hediff.spawnThingOnRemoved.isTechHediff)
+                {
+                    var defName = hediff.defName.ToLower();
+                    if (defName.Contains("bionic") || defName.Contains("archotech"))
+                    {
+                        if (hediff.comps is null)
+                        {
+                            hediff.comps = new List<HediffCompProperties>();
+                        }
+                        hediff.comps.Add(new HediffCompProperties_QualityBionics());
+                        if (hediff.spawnThingOnRemoved.comps is null)
+                        {
+                            hediff.spawnThingOnRemoved.comps = new List<CompProperties>();
+                        }
+                        if (!hediff.spawnThingOnRemoved.comps.Any(x => x.compClass == typeof(CompQuality)))
+                        {
+                            hediff.spawnThingOnRemoved.comps.Add(new CompProperties { compClass = typeof(CompQuality) });
+                        }
+                    }
+                }
+            }
+        }
 
+        public static Pair<ThingDef, QualityCategory>? thingWithQuality;
+        public static void ApplyOnPawnPrefix(RecipeWorker __instance, Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+        {
+            if (__instance.recipe.removesHediff != null)
+            {
+                if (!pawn.health.hediffSet.GetNotMissingParts().Contains(part))
+                {
+                    return;
+                }
+                Hediff hediff = pawn.health.hediffSet.hediffs.FirstOrDefault((Hediff x) => x.def == __instance.recipe.removesHediff);
+                if (hediff != null)
+                {
+                    if (hediff.def.spawnThingOnRemoved != null)
+                    {
+                        var comp = hediff.TryGetComp<HediffCompQualityBionics>();
+                        if (comp != null)
+                        {
+                            thingWithQuality = new Pair<ThingDef, QualityCategory>(hediff.def.spawnThingOnRemoved, comp.quality);
+                        }
+                    }
+                }
+            }
+
+        }
         public static void ApplyOnPawnPostfix(RecipeWorker __instance, Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
         {
+            thingWithQuality = null;
             if (__instance.recipe?.addsHediff != null)
             {
                 var hediff = pawn.health.hediffSet.hediffs.FindLast(x => x.def == __instance.recipe.addsHediff);
@@ -60,33 +111,64 @@ namespace QualityBionics
                 }
             }
         }
-        public static void AddQualityToImplants()
+    }
+
+    [HarmonyPatch(typeof(MedicalRecipesUtility), "SpawnThingsFromHediffs")]
+    public class SpawnThingsFromHediffs_Patch
+    {
+        public static List<Pair<ThingDef, QualityCategory>?> thingsWithQualities = new List<Pair<ThingDef, QualityCategory>?>();
+        private static void Prefix(Pawn pawn, BodyPartRecord part, IntVec3 pos, Map map)
         {
-            foreach (var hediff in DefDatabase<HediffDef>.AllDefs)
+            if (pawn.health.hediffSet.GetNotMissingParts().Contains(part))
             {
-                if (hediff.spawnThingOnRemoved != null && hediff.spawnThingOnRemoved.isTechHediff)
+                foreach (Hediff item in pawn.health.hediffSet.hediffs.Where((Hediff x) => x.Part == part))
                 {
-                    if (hediff.defName.ToLower().Contains("bionic") || hediff.defName.ToLower().Contains("archotech"))
+                    if (item.def.spawnThingOnRemoved != null)
                     {
-                        if (hediff.comps is null)
+                        var comp = item.TryGetComp<HediffCompQualityBionics>();
+                        if (comp != null)
                         {
-                            hediff.comps = new List<HediffCompProperties>();
+                            if (thingsWithQualities is null)
+                            {
+                                thingsWithQualities = new List<Pair<ThingDef, QualityCategory>?>();
+                            }
+                            thingsWithQualities.Add(new Pair<ThingDef, QualityCategory>(item.def.spawnThingOnRemoved, comp.quality));
                         }
-                        hediff.comps.Add(new HediffCompProperties_QualityBionics());
-                        if (hediff.spawnThingOnRemoved.comps is null)
-                        {
-                            hediff.spawnThingOnRemoved.comps = new List<CompProperties>();
-                        }
-                        if (!hediff.spawnThingOnRemoved.comps.Any(x => x.compClass == typeof(CompQuality)))
-                        {
-                            hediff.spawnThingOnRemoved.comps.Add(new CompProperties { compClass = typeof(CompQuality) });
-                        }
-                        Log.Message("Tech hediff: " + hediff);
                     }
                 }
-                else if (hediff.defName.ToLower().Contains("bionic") || hediff.defName.ToLower().Contains("archotech"))
+            }
+        }
+        private static void Postfix(Pawn pawn, BodyPartRecord part, IntVec3 pos, Map map)
+        {
+            thingsWithQualities = null;
+        }
+    }
+
+    [HarmonyPatch(typeof(ThingWithComps), "SpawnSetup")]
+    public class SpawnSetup_Patch
+    {
+        private static void Postfix(ThingWithComps __instance)
+        {
+            if (HarmonyContainer.thingWithQuality.HasValue && __instance.def == HarmonyContainer.thingWithQuality.Value.First)
+            {
+                var comp = __instance.TryGetComp<CompQuality>();
+                if (comp != null)
                 {
-                    Log.Error(hediff + " isn't accounted as quality bionic");
+                    comp.SetQuality(HarmonyContainer.thingWithQuality.Value.Second, ArtGenerationContext.Colony);
+                    HarmonyContainer.thingWithQuality = null;
+                }
+            }
+            if (SpawnThingsFromHediffs_Patch.thingsWithQualities != null)
+            {
+                var pair = SpawnThingsFromHediffs_Patch.thingsWithQualities.FirstOrDefault(x => x.Value.First == __instance.def);
+                if (pair.HasValue)
+                {
+                    var comp = __instance.TryGetComp<CompQuality>();
+                    if (comp != null)
+                    {
+                        comp.SetQuality(pair.Value.Second, ArtGenerationContext.Colony);
+                        SpawnThingsFromHediffs_Patch.thingsWithQualities.Remove(pair);
+                    }
                 }
             }
         }
@@ -114,6 +196,25 @@ namespace QualityBionics
             if (__state.HasValue)
             {
                 __instance.def.addedPartProps.partEfficiency = __state.Value;
+            }
+        }
+    }
+    [HarmonyPatch(typeof(BodyPartDef), "GetMaxHealth")]
+    public class GetMaxHealth_Patch
+    {
+        [HarmonyPriority(Priority.Last)]
+        private static void Postfix(BodyPartDef __instance, Pawn pawn, ref float __result)
+        {
+            foreach (var hediff in pawn.health.hediffSet.hediffs)
+            {
+                if (hediff.Part?.def == __instance)
+                {
+                    var comp = hediff.TryGetComp<HediffCompQualityBionics>();
+                    if (comp != null)
+                    {
+                        __result *= QualityBionicsMod.settings.GetQualityMultipliersForHP(comp.quality);
+                    }
+                }
             }
         }
     }

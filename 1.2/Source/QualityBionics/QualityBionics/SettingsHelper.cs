@@ -23,7 +23,7 @@ namespace QualityBionics
 		public static void SliderLabeled(this Listing_Standard ls, string label, ref float val, string format, float min = 0f, float max = 1f, string tooltip = null)
 		{
 			Rect rect = ls.GetRect(Text.LineHeight);
-			Rect rect2 = GenUI.Rounded(GenUI.LeftPart(rect, 0.7f));
+			Rect rect2 = GenUI.Rounded(GenUI.LeftPart(rect, 0.5f));
 			Rect rect3 = GenUI.Rounded(GenUI.LeftPart(GenUI.Rounded(GenUI.RightPart(rect, 0.3f)), 0.67f));
 			Rect rect4 = GenUI.Rounded(GenUI.RightPart(rect, 0.1f));
 			TextAnchor anchor = Text.Anchor;
