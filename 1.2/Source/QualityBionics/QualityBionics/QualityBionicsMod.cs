@@ -15,6 +15,32 @@ namespace QualityBionics
         public QualityBionicsMod(ModContentPack pack) : base(pack)
         {
             settings = GetSettings<QualityBionicsSettings>();
+            if (settings.hpQualityMultipliers is null)
+            {
+                settings.qualityMultipliers = new Dictionary<QualityCategory, float>
+                {
+                    {QualityCategory.Awful, 0.50f},
+                    {QualityCategory.Poor, 0.75f},
+                    {QualityCategory.Normal, 1f},
+                    {QualityCategory.Good, 1.25f},
+                    {QualityCategory.Excellent, 1.5f},
+                    {QualityCategory.Masterwork, 1.7f},
+                    {QualityCategory.Legendary, 2f},
+                };
+            }
+            if (settings.hpQualityMultipliers is null)
+            {
+                settings.hpQualityMultipliers = new Dictionary<QualityCategory, float>
+                {
+                    {QualityCategory.Awful, 0.50f},
+                    {QualityCategory.Poor, 0.75f},
+                    {QualityCategory.Normal, 1f},
+                    {QualityCategory.Good, 1.25f},
+                    {QualityCategory.Excellent, 1.5f},
+                    {QualityCategory.Masterwork, 1.7f},
+                    {QualityCategory.Legendary, 2f},
+                };
+            }
         }
         public override void DoSettingsWindowContents(Rect inRect)
         {
