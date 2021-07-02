@@ -15,6 +15,11 @@ namespace QualityBionics
     internal static class HarmonyContainer
     {
         public static Harmony harmony;
+
+        private static HashSet<string> customHediffDefs = new HashSet<string>
+        {
+            "YourHediffDefName",
+        };
         static HarmonyContainer()
         {
             harmony = new Harmony("QualityBionics.Mod");
@@ -44,7 +49,7 @@ namespace QualityBionics
                 if (hediff.spawnThingOnRemoved != null && hediff.spawnThingOnRemoved.isTechHediff)
                 {
                     var defName = hediff.defName.ToLower();
-                    if (defName.Contains("bionic") || defName.Contains("archotech"))
+                    if (defName.Contains("bionic") || defName.Contains("archotech") || customHediffDefs.Contains(defName))
                     {
                         if (hediff.comps is null)
                         {
