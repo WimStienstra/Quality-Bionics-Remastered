@@ -18,7 +18,8 @@ namespace QualityBionics
 
         private static HashSet<string> customHediffDefs = new HashSet<string>
         {
-            "YourHediffDefName",
+            "synthetic",
+            "cybernetic",
         };
         static HarmonyContainer()
         {
