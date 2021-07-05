@@ -52,6 +52,9 @@ namespace QualityBionics
 
         private List<QualityCategory> qualityKeys2;
         private List<float> floatValues2;
+
+        private string buff;
+        private string buff2;
         public void DoSettingsWindowContents(Rect inRect)
         {
             Rect rect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height);
@@ -65,6 +68,14 @@ namespace QualityBionics
                 var value = qualityMultipliers[quality];
                 listingStandard.SliderLabeled(Enum.GetName(typeof(QualityCategory), quality), ref value, (value * 100f).ToStringDecimalIfSmall() + "%", 0.01f, 5f);
                 qualityMultipliers[quality] = value;
+            
+                var newValue = value * 100f;
+                buff = newValue.ToString();
+                listingStandard.TextFieldNumeric<float>(ref newValue, ref buff, 1f, 500f);
+                if (newValue != (value * 100f))
+                {
+                    qualityMultipliers[quality] = (newValue / 100f);
+                }
             }
             if (listingStandard.ButtonText("Reset".Translate()))
             {
@@ -79,7 +90,7 @@ namespace QualityBionics
                     {QualityCategory.Legendary, 2f},
                 };
             }
-
+            
             listingStandard.NewColumn();
             listingStandard.Label("QB.BodyPartHPMultipliers".Translate());
             listingStandard.ColumnWidth = rect.width - num;
@@ -90,6 +101,16 @@ namespace QualityBionics
                 listingStandard.SliderLabeled(Enum.GetName(typeof(QualityCategory), quality), ref value, (value * 100f).ToStringDecimalIfSmall() + "%", 0.01f, 5f);
                 listingStandard.ColumnWidth += 30;
                 hpQualityMultipliers[quality] = value;
+                var newValue = value * 100f;
+                listingStandard.ColumnWidth -= 30;
+                buff2 = newValue.ToString();
+                listingStandard.TextFieldNumeric<float>(ref newValue, ref buff2, 1f, 500f);
+                listingStandard.ColumnWidth += 30;
+
+                if (newValue != (value * 100f))
+                {
+                    hpQualityMultipliers[quality] = (newValue / 100f);
+                }
             }
             if (listingStandard.ButtonText("Reset".Translate()))
             {
