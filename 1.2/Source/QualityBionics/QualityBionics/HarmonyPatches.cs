@@ -73,13 +73,13 @@ namespace QualityBionics
         public static Pair<ThingDef, QualityCategory>? thingWithQuality;
         public static void ApplyOnPawnPrefix(RecipeWorker __instance, Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
         {
-            if (__instance.recipe.removesHediff != null)
+            if (__instance.recipe?.removesHediff != null)
             {
-                if (!pawn.health.hediffSet.GetNotMissingParts().Contains(part))
+                if (!pawn.health?.hediffSet?.GetNotMissingParts().Contains(part) ?? false)
                 {
                     return;
                 }
-                Hediff hediff = pawn.health.hediffSet.hediffs.FirstOrDefault((Hediff x) => x.def == __instance.recipe.removesHediff);
+                Hediff hediff = pawn.health?.hediffSet?.hediffs?.FirstOrDefault((Hediff x) => x.def == __instance.recipe.removesHediff);
                 if (hediff != null)
                 {
                     if (hediff.def.spawnThingOnRemoved != null)
@@ -97,9 +97,9 @@ namespace QualityBionics
         public static void ApplyOnPawnPostfix(RecipeWorker __instance, Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
         {
             thingWithQuality = null;
-            if (__instance.recipe?.addsHediff != null)
+            if (__instance.recipe?.addsHediff != null && ingredients != null)
             {
-                var hediff = pawn.health.hediffSet.hediffs.FindLast(x => x.def == __instance.recipe.addsHediff);
+                var hediff = pawn.health?.hediffSet?.hediffs?.FindLast(x => x.def == __instance.recipe.addsHediff);
                 if (hediff != null)
                 {
                     var comp = hediff.TryGetComp<HediffCompQualityBionics>();
@@ -107,7 +107,7 @@ namespace QualityBionics
                     {
                         foreach (var ingredient in ingredients)
                         {
-                            if (hediff.def.spawnThingOnRemoved == ingredient.def && ingredient.TryGetQuality(out var qualityCategory))
+                            if (ingredient != null && hediff.def.spawnThingOnRemoved == ingredient.def && ingredient.TryGetQuality(out var qualityCategory))
                             {
                                 comp.quality = qualityCategory;
                                 break;
