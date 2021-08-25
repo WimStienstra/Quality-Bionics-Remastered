@@ -11,6 +11,7 @@ namespace QualityBionics
 {
     class QualityBionicsSettings : ModSettings
     {
+        public TechLevel minTechLevelForQuality = TechLevel.Industrial;
         public Dictionary<QualityCategory, float> qualityMultipliers = new Dictionary<QualityCategory, float>
         {
             {QualityCategory.Awful, 0.50f},
@@ -45,6 +46,7 @@ namespace QualityBionics
             base.ExposeData();
             Scribe_Collections.Look(ref qualityMultipliers, "qualityMultipliers", LookMode.Value, LookMode.Value, ref qualityKeys, ref floatValues);
             Scribe_Collections.Look(ref hpQualityMultipliers, "hpQualityMultipliers", LookMode.Value, LookMode.Value, ref qualityKeys2, ref floatValues2);
+            Scribe_Values.Look(ref minTechLevelForQuality, "techLevelForQuality", TechLevel.Industrial);
         }
 
         private List<QualityCategory> qualityKeys;
@@ -126,6 +128,25 @@ namespace QualityBionics
                 };
             }
 
+            var newListing = new Listing_Standard();
+            newListing.Begin(new Rect(inRect.x, listingStandard.CurHeight, inRect.width, inRect.height));
+            newListing.Label("QB.CurMinTechLevelForBionics".Translate(minTechLevelForQuality.ToStringHuman()));
+            if (newListing.ButtonText("QB.SelectMinTechLevelForQualityBionics".Translate()))
+            {
+                var floatList = new List<FloatMenuOption>();
+                foreach (var value in Enum.GetValues(typeof(TechLevel)).Cast<TechLevel>())
+                {
+                    if (value != TechLevel.Undefined)
+                    {
+                        floatList.Add(new FloatMenuOption(value.ToStringHuman(), delegate
+                        {
+                            minTechLevelForQuality = value;
+                        }));
+                    }
+                }
+                Find.WindowStack.Add(new FloatMenu(floatList));
+            };
+            newListing.End();
             listingStandard.End();
             base.Write();
         }

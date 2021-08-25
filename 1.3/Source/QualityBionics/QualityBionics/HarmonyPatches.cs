@@ -49,8 +49,9 @@ namespace QualityBionics
             {
                 if (hediff.spawnThingOnRemoved != null && hediff.spawnThingOnRemoved.isTechHediff)
                 {
-                    var defName = hediff.defName.ToLower();
-                    if (defName.Contains("bionic") || defName.Contains("archotech") || customHediffDefs.Contains(hediff.defName))
+                    //var defName = hediff.defName.ToLower();
+                    //if (defName.Contains("bionic") || defName.Contains("archotech") || customHediffDefs.Contains(hediff.defName))
+                    if (hediff.spawnThingOnRemoved.techLevel >= QualityBionicsMod.settings.minTechLevelForQuality)
                     {
                         if (hediff.comps is null)
                         {
@@ -219,6 +220,7 @@ namespace QualityBionics
                     if (comp != null)
                     {
                         __result *= QualityBionicsMod.settings.GetQualityMultipliersForHP(comp.quality);
+                        __result = (int)__result;
                     }
                 }
             }
