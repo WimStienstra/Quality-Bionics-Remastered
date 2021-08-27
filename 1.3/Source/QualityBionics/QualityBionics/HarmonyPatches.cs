@@ -49,9 +49,9 @@ namespace QualityBionics
             {
                 if (hediff.spawnThingOnRemoved != null && hediff.spawnThingOnRemoved.isTechHediff)
                 {
-                    //var defName = hediff.defName.ToLower();
-                    //if (defName.Contains("bionic") || defName.Contains("archotech") || customHediffDefs.Contains(hediff.defName))
-                    if (hediff.spawnThingOnRemoved.techLevel >= QualityBionicsMod.settings.minTechLevelForQuality)
+                    var defName = hediff.defName.ToLower();
+                    if (defName.Contains("bionic") || defName.Contains("archotech") || customHediffDefs.Contains(hediff.defName) 
+                            || hediff.spawnThingOnRemoved.techLevel >= QualityBionicsMod.settings.minTechLevelForQuality)
                     {
                         if (hediff.comps is null)
                         {
