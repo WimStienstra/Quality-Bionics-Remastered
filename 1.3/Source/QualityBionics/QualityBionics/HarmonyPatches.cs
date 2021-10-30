@@ -323,11 +323,11 @@ namespace QualityBionics
                     {
                         HediffDef diff = item6.addsHediff;
 
-                        if (diff.comps.Any(x => x.GetType() == typeof(HediffCompProperties_QualityBionics)) && diff.addedPartProps != null)
+                        if ((diff.comps?.Any(x => x?.GetType() == typeof(HediffCompProperties_QualityBionics)) ?? false) && diff.addedPartProps != null)
                         {
                             __state = new Pair<HediffDef, float>(diff, diff.addedPartProps.partEfficiency);
                             //diff.addedPartProps.partEfficiency *= QualityBionicsMod.settings.GetQualityMultipliers(qc);
-                            diff.addedPartProps.partEfficiency = diff.comps.OfType< HediffCompProperties_QualityBionics>().First().baseEfficiency * QualityBionicsMod.settings.GetQualityMultipliers(qc); //new - Changed the calculation to prevent infinite loops.
+                            diff.addedPartProps.partEfficiency = diff.comps.OfType<HediffCompProperties_QualityBionics>().First().baseEfficiency * QualityBionicsMod.settings.GetQualityMultipliers(qc); //new - Changed the calculation to prevent infinite loops.
                         }
                     }
                 }

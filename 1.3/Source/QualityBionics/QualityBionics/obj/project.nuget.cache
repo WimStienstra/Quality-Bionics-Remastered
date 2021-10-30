@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "KSaW97PMW/x8YjcyKSwr6EIJC2gRAHLHLnxiVgqZoLfo+bt91vPlJfpz7P/fFBOaF0nxysxAEwNOvpKopM+iog==",
+  "dgSpecHash": "z7tbeIF2jQPlhIpAoCuR4RbFrHMPWT4KSj6mY5Zmdn2pjNPRmR2IXLPekhCLwpNyVoPLRtm6TrMzp3lXU9OCzA==",
   "success": true,
-  "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\__LocalCopy_Quality Bionics_-4-9\\1.3\\Source\\QualityBionics\\QualityBionics\\QualityBionics.csproj",
+  "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Quality-Bionics\\1.3\\Source\\QualityBionics\\QualityBionics\\QualityBionics.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Statist\\.nuget\\packages\\krafs.rimworld.ref\\1.3.3101\\krafs.rimworld.ref.1.3.3101.nupkg.sha512",
-    "C:\\Users\\Statist\\.nuget\\packages\\lib.harmony\\2.1.1\\lib.harmony.2.1.1.nupkg.sha512"
+    "C:\\Users\\Vova\\.nuget\\packages\\krafs.rimworld.ref\\1.3.3167-beta\\krafs.rimworld.ref.1.3.3167-beta.nupkg.sha512",
+    "C:\\Users\\Vova\\.nuget\\packages\\lib.harmony\\2.1.1\\lib.harmony.2.1.1.nupkg.sha512"
   ],
   "logs": []
 }
