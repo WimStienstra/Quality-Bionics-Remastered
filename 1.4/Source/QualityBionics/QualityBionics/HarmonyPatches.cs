@@ -248,9 +248,11 @@ namespace QualityBionics
             {
                 if (diffSet.HasDirectlyAddedPartFor(rec))
                 {
-                    Hediff_AddedPart hediff_AddedPart = (from x in diffSet.GetHediffs<Hediff_AddedPart>()
-                                                         where x.Part == rec
-                                                         select x).First();
+                    List<Hediff_AddedPart> a = new List<Hediff_AddedPart>();
+                    diffSet.GetHediffs<Hediff_AddedPart>(ref a);
+
+                    Hediff_AddedPart hediff_AddedPart = (from x in a where x.Part==rec select x).First();
+
                     if (hediff_AddedPart != null)
                     {
                         if (hediff_AddedPart.def.addedPartProps != null)
