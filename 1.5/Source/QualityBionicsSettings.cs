@@ -11,8 +11,8 @@ namespace QualityBionics
 {
     class QualityBionicsSettings : ModSettings
     {
-        public TechLevel minTechLevelForQuality = TechLevel.Industrial;
-        public Dictionary<QualityCategory, float> qualityMultipliers = new Dictionary<QualityCategory, float>
+        public static TechLevel minTechLevelForQuality = TechLevel.Industrial;
+        public static Dictionary<QualityCategory, float> qualityMultipliers = new Dictionary<QualityCategory, float>
         {
             {QualityCategory.Awful, 0.50f},
             {QualityCategory.Poor, 0.75f},
@@ -23,7 +23,7 @@ namespace QualityBionics
             {QualityCategory.Legendary, 2f},
         };
 
-        public Dictionary<QualityCategory, float> hpQualityMultipliers = new Dictionary<QualityCategory, float>
+        public static Dictionary<QualityCategory, float> hpQualityMultipliers = new Dictionary<QualityCategory, float>
         {
             {QualityCategory.Awful, 0.50f},
             {QualityCategory.Poor, 0.75f},
@@ -33,11 +33,11 @@ namespace QualityBionics
             {QualityCategory.Masterwork, 1.7f},
             {QualityCategory.Legendary, 2f},
         };
-        public float GetQualityMultipliers(QualityCategory quality)
+        public static float GetQualityMultipliers(QualityCategory quality)
         {
             return qualityMultipliers[quality];
         }
-        public float GetQualityMultipliersForHP(QualityCategory quality)
+        public static float GetQualityMultipliersForHP(QualityCategory quality)
         {
             return hpQualityMultipliers[quality];
         }
@@ -49,15 +49,15 @@ namespace QualityBionics
             Scribe_Values.Look(ref minTechLevelForQuality, "techLevelForQuality", TechLevel.Industrial);
         }
 
-        private List<QualityCategory> qualityKeys;
-        private List<float> floatValues;
+        private static List<QualityCategory>? qualityKeys;
+        private static List<float>? floatValues;
 
-        private List<QualityCategory> qualityKeys2;
-        private List<float> floatValues2;
+        private static List<QualityCategory>? qualityKeys2;
+        private static List<float>? floatValues2;
 
-        private string buff;
-        private string buff2;
-        public void DoSettingsWindowContents(Rect inRect)
+        private static string? buff;
+        private static string? buff2;
+        public static void DoSettingsWindowContents(Rect inRect)
         {
             Rect rect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height);
             Listing_Standard listingStandard = new Listing_Standard();
@@ -70,7 +70,7 @@ namespace QualityBionics
                 var value = qualityMultipliers[quality];
                 listingStandard.SliderLabeled(Enum.GetName(typeof(QualityCategory), quality), ref value, (value * 100f).ToStringDecimalIfSmall() + "%", 0.01f, 5f);
                 qualityMultipliers[quality] = value;
-            
+
                 var newValue = value * 100f;
                 buff = newValue.ToString();
                 listingStandard.TextFieldNumeric<float>(ref newValue, ref buff, 1f, 500f);
@@ -92,7 +92,7 @@ namespace QualityBionics
                     {QualityCategory.Legendary, 2f},
                 };
             }
-            
+
             listingStandard.NewColumn();
             listingStandard.Label("QB.BodyPartHPMultipliers".Translate());
             listingStandard.ColumnWidth = rect.width - num;
@@ -148,7 +148,6 @@ namespace QualityBionics
             };
             newListing.End();
             listingStandard.End();
-            base.Write();
         }
     }
 }

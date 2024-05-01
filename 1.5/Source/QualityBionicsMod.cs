@@ -11,13 +11,12 @@ namespace QualityBionics
 {
     class QualityBionicsMod : Mod
     {
-        public static QualityBionicsSettings settings;
         public QualityBionicsMod(ModContentPack pack) : base(pack)
         {
-            settings = GetSettings<QualityBionicsSettings>();
-            if (settings.hpQualityMultipliers is null)
+            GetSettings<QualityBionicsSettings>();
+            if (QualityBionicsSettings.hpQualityMultipliers is null)
             {
-                settings.qualityMultipliers = new Dictionary<QualityCategory, float>
+                QualityBionicsSettings.qualityMultipliers = new Dictionary<QualityCategory, float>
                 {
                     {QualityCategory.Awful, 0.50f},
                     {QualityCategory.Poor, 0.75f},
@@ -28,9 +27,9 @@ namespace QualityBionics
                     {QualityCategory.Legendary, 2f},
                 };
             }
-            if (settings.hpQualityMultipliers is null)
+            if (QualityBionicsSettings.hpQualityMultipliers is null)
             {
-                settings.hpQualityMultipliers = new Dictionary<QualityCategory, float>
+                QualityBionicsSettings.hpQualityMultipliers = new Dictionary<QualityCategory, float>
                 {
                     {QualityCategory.Awful, 0.50f},
                     {QualityCategory.Poor, 0.75f},
@@ -45,12 +44,37 @@ namespace QualityBionics
         public override void DoSettingsWindowContents(Rect inRect)
         {
             base.DoSettingsWindowContents(inRect);
-            settings.DoSettingsWindowContents(inRect);
+            QualityBionicsSettings.DoSettingsWindowContents(inRect);
+            GetSettings<QualityBionicsSettings>().Write();
         }
 
         public override string SettingsCategory()
         {
-            return "Quality Bionics";
+            return Content.Name;
+        }
+
+        public static void Message(string msg)
+        {
+            Log.Message("[Quality Bionics (Continued)] " + msg);
+        }
+
+        public static void Warning(string msg)
+        {
+            Log.Warning("[Quality Bionics (Continued)] " + msg);
+        }
+
+        public static void Error(string msg)
+        {
+            Log.Error("[Quality Bionics (Continued)] " + msg);
+        }
+
+        public static void Exception(string msg, Exception? e = null)
+        {
+            Message(msg);
+            if (e != null)
+            {
+                Log.Error(e.ToString());
+            }
         }
     }
 }

@@ -32,8 +32,8 @@ namespace QualityBionics
         {
             harmony = new Harmony("QualityBionics.Mod");
             harmony.PatchAll();
-            var prefix = typeof(HarmonyContainer).GetMethod("ApplyOnPawnPrefix");
-            var postfix = typeof(HarmonyContainer).GetMethod("ApplyOnPawnPostfix");
+            var prefix = AccessTools.Method(typeof(HarmonyContainer), nameof(ApplyOnPawnPrefix));
+            var postfix = AccessTools.Method(typeof(HarmonyContainer), nameof(ApplyOnPawnPostfix));
             var baseType = typeof(RecipeWorker);
             var types = baseType.AllSubclassesNonAbstract();
             foreach (Type cur in types)
@@ -43,7 +43,7 @@ namespace QualityBionics
                 {
                     harmony.Patch(method, new HarmonyMethod(prefix), new HarmonyMethod(postfix));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //Log.Error("Error patching " + cur + " - " + method + " - " + ex);
                 }
@@ -58,19 +58,12 @@ namespace QualityBionics
                 if (hediff.spawnThingOnRemoved != null && hediff.spawnThingOnRemoved.isTechHediff && hediff.addedPartProps != null) //new - Changed so only Hediffs with Effifiencies get the quality added.
                 {
                     var defName = hediff.defName.ToLower();
-                    if (defName.Contains("bionic") || defName.Contains("archotech") || customHediffDefs.Contains(hediff.defName) 
-                            || hediff.spawnThingOnRemoved.techLevel >= QualityBionicsMod.settings.minTechLevelForQuality)
+                    if (defName.Contains("bionic") || defName.Contains("archotech") || customHediffDefs.Contains(hediff.defName)
+                            || hediff.spawnThingOnRemoved.techLevel >= QualityBionicsSettings.minTechLevelForQuality)
                     {
-                        if (hediff.comps is null)
-                        {
-                            hediff.comps = new List<HediffCompProperties>();
-                        }
-                        //hediff.comps.Add(new HediffCompProperties_QualityBionics());
-                        hediff.comps.Add(new HediffCompProperties_QualityBionics() {baseEfficiency = hediff.addedPartProps.partEfficiency}); //new - Added the base Efficiency to the Property to calculate from.
-                        if (hediff.spawnThingOnRemoved.comps is null)
-                        {
-                            hediff.spawnThingOnRemoved.comps = new List<CompProperties>();
-                        }
+                        hediff.comps ??= new List<HediffCompProperties>();
+                        hediff.comps.Add(new HediffCompProperties_QualityBionics() { baseEfficiency = hediff.addedPartProps.partEfficiency }); //new - Added the base Efficiency to the Property to calculate from.
+                        hediff.spawnThingOnRemoved.comps ??= new List<CompProperties>();
                         if (!hediff.spawnThingOnRemoved.comps.Any(x => x.compClass == typeof(CompQuality)))
                         {
                             hediff.spawnThingOnRemoved.comps.Add(new CompProperties { compClass = typeof(CompQuality) });
@@ -89,7 +82,7 @@ namespace QualityBionics
                 {
                     return;
                 }
-                Hediff hediff = pawn.health?.hediffSet?.hediffs?.FirstOrDefault((Hediff x) => x.def == __instance.recipe.removesHediff);
+                Hediff? hediff = pawn.health?.hediffSet?.hediffs?.FirstOrDefault(x => x.def == __instance.recipe.removesHediff);
                 if (hediff != null)
                 {
                     if (hediff.def.spawnThingOnRemoved != null)
@@ -132,7 +125,7 @@ namespace QualityBionics
     [HarmonyPatch(typeof(MedicalRecipesUtility), "SpawnThingsFromHediffs")]
     public class SpawnThingsFromHediffs_Patch
     {
-        public static List<Pair<ThingDef, QualityCategory>?> thingsWithQualities = new List<Pair<ThingDef, QualityCategory>?>();
+        public static List<Pair<ThingDef, QualityCategory>?>? thingsWithQualities = new List<Pair<ThingDef, QualityCategory>?>();
         private static void Prefix(Pawn pawn, BodyPartRecord part, IntVec3 pos, Map map)
         {
             if (pawn.health.hediffSet.GetNotMissingParts().Contains(part))
@@ -176,7 +169,7 @@ namespace QualityBionics
             }
             if (SpawnThingsFromHediffs_Patch.thingsWithQualities != null)
             {
-                var pair = SpawnThingsFromHediffs_Patch.thingsWithQualities.FirstOrDefault(x => x.Value.First == __instance.def);
+                var pair = SpawnThingsFromHediffs_Patch.thingsWithQualities.FirstOrDefault(x => x.HasValue && x.Value.First == __instance.def);
                 if (pair.HasValue)
                 {
                     var comp = __instance.TryGetComp<CompQuality>();
@@ -190,32 +183,32 @@ namespace QualityBionics
         }
     }
 
-    [HarmonyPatch(typeof(Hediff_AddedPart), "TipStringExtra", MethodType.Getter)]
-    public class TipStringExtra_Patch
-    {
-        private static void Prefix(Hediff_AddedPart __instance, out float? __state)
-        {
-            __state = null;
-            if (__instance.def.addedPartProps != null)
-            {
-                var comp = __instance.TryGetComp<HediffCompQualityBionics>();
-                if (comp != null)
-                {
-                    __state = __instance.def.addedPartProps.partEfficiency;
-                    //__instance.def.addedPartProps.partEfficiency *= QualityBionicsMod.settings.GetQualityMultipliers(comp.quality);
-                    __instance.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * QualityBionicsMod.settings.GetQualityMultipliers(comp.quality); //new - Changed the calculation to prevent infinite loops.
-                }
-            }
-        }
+    // [HarmonyPatch(typeof(Hediff_AddedPart), "TipStringExtra", MethodType.Getter)]
+    // public class TipStringExtra_Patch
+    // {
+    //     private static void Prefix(Hediff_AddedPart __instance, out float? __state)
+    //     {
+    //         __state = null;
+    //         if (__instance.def.addedPartProps != null)
+    //         {
+    //             var comp = __instance.TryGetComp<HediffCompQualityBionics>();
+    //             if (comp != null)
+    //             {
+    //                 __state = __instance.def.addedPartProps.partEfficiency;
+    //                 //__instance.def.addedPartProps.partEfficiency *= QualityBionicsMod.settings.GetQualityMultipliers(comp.quality);
+    //                 __instance.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * QualityBionicsMod.settings.GetQualityMultipliers(comp.quality); //new - Changed the calculation to prevent infinite loops.
+    //             }
+    //         }
+    //     }
 
-        private static void Postfix(Hediff_AddedPart __instance, float? __state)
-        {
-            if (__state.HasValue)
-            {
-                __instance.def.addedPartProps.partEfficiency = __state.Value;
-            }
-        }
-    }
+    //     private static void Postfix(Hediff_AddedPart __instance, float? __state)
+    //     {
+    //         if (__state.HasValue)
+    //         {
+    //             __instance.def.addedPartProps.partEfficiency = __state.Value;
+    //         }
+    //     }
+    // }
     [HarmonyPatch(typeof(BodyPartDef), "GetMaxHealth")]
     public class GetMaxHealth_Patch
     {
@@ -229,7 +222,7 @@ namespace QualityBionics
                     var comp = hediff.TryGetComp<HediffCompQualityBionics>();
                     if (comp != null)
                     {
-                        __result *= QualityBionicsMod.settings.GetQualityMultipliersForHP(comp.quality);
+                        __result *= QualityBionicsSettings.GetQualityMultipliersForHP(comp.quality);
                         __result = (int)__result;
                     }
                 }
@@ -240,7 +233,7 @@ namespace QualityBionics
     [HarmonyPatch(typeof(PawnCapacityUtility), "CalculatePartEfficiency")]
     public class CalculatePartEfficiency_Patch
     {
-        private static void Prefix(out Pair<Hediff, float>? __state, HediffSet diffSet, BodyPartRecord part, bool ignoreAddedParts = false, List<CapacityImpactor> impactors = null)
+        private static void Prefix(out Pair<Hediff, float>? __state, HediffSet diffSet, BodyPartRecord part, bool ignoreAddedParts = false, List<CapacityImpactor>? impactors = null)
         {
             __state = null;
             BodyPartRecord rec;
@@ -249,9 +242,9 @@ namespace QualityBionics
                 if (diffSet.HasDirectlyAddedPartFor(rec))
                 {
                     List<Hediff_AddedPart> a = new List<Hediff_AddedPart>();
-                    diffSet.GetHediffs<Hediff_AddedPart>(ref a);
+                    diffSet.GetHediffs(ref a);
 
-                    Hediff_AddedPart hediff_AddedPart = (from x in a where x.Part==rec select x).First();
+                    Hediff_AddedPart hediff_AddedPart = (from x in a where x.Part == rec select x).First();
 
                     if (hediff_AddedPart != null)
                     {
@@ -262,7 +255,7 @@ namespace QualityBionics
                             {
                                 __state = new Pair<Hediff, float>(hediff_AddedPart, hediff_AddedPart.def.addedPartProps.partEfficiency);
                                 //hediff_AddedPart.def.addedPartProps.partEfficiency *= QualityBionicsMod.settings.GetQualityMultipliers(comp.quality);
-                                hediff_AddedPart.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * QualityBionicsMod.settings.GetQualityMultipliers(comp.quality); //new - Changed the calculation to prevent infinite loops.
+                                hediff_AddedPart.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * QualityBionicsSettings.GetQualityMultipliers(comp.quality); //new - Changed the calculation to prevent infinite loops.
                                 return;
                             }
                         }
@@ -277,7 +270,7 @@ namespace QualityBionics
             {
                 for (int i = 0; i < diffSet.hediffs.Count; i++)
                 {
-                    Hediff_AddedPart hediff_AddedPart2 = diffSet.hediffs[i] as Hediff_AddedPart;
+                    Hediff_AddedPart? hediff_AddedPart2 = diffSet.hediffs[i] as Hediff_AddedPart;
                     if (hediff_AddedPart2 != null && hediff_AddedPart2.Part == part)
                     {
                         if (hediff_AddedPart2 != null)
@@ -289,7 +282,7 @@ namespace QualityBionics
                                 {
                                     __state = new Pair<Hediff, float>(hediff_AddedPart2, hediff_AddedPart2.def.addedPartProps.partEfficiency);
                                     //hediff_AddedPart2.def.addedPartProps.partEfficiency *= QualityBionicsMod.settings.GetQualityMultipliers(comp.quality);
-                                    hediff_AddedPart2.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * QualityBionicsMod.settings.GetQualityMultipliers(comp.quality); //new - Changed the calculation to prevent infinite loops.
+                                    hediff_AddedPart2.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * QualityBionicsSettings.GetQualityMultipliers(comp.quality); //new - Changed the calculation to prevent infinite loops.
                                     return;
                                 }
                             }
@@ -300,7 +293,7 @@ namespace QualityBionics
             }
         }
 
-        private static void Postfix(Pair<Hediff, float>? __state, HediffSet diffSet, BodyPartRecord part, bool ignoreAddedParts = false, List<CapacityImpactor> impactors = null)
+        private static void Postfix(Pair<Hediff, float>? __state, HediffSet diffSet, BodyPartRecord part, bool ignoreAddedParts = false, List<CapacityImpactor>? impactors = null)
         {
             if (__state.HasValue)
             {
@@ -329,7 +322,7 @@ namespace QualityBionics
                         {
                             __state = new Pair<HediffDef, float>(diff, diff.addedPartProps.partEfficiency);
                             //diff.addedPartProps.partEfficiency *= QualityBionicsMod.settings.GetQualityMultipliers(qc);
-                            diff.addedPartProps.partEfficiency = diff.comps.OfType<HediffCompProperties_QualityBionics>().First().baseEfficiency * QualityBionicsMod.settings.GetQualityMultipliers(qc); //new - Changed the calculation to prevent infinite loops.
+                            diff.addedPartProps.partEfficiency = diff.comps.OfType<HediffCompProperties_QualityBionics>().First().baseEfficiency * QualityBionicsSettings.GetQualityMultipliers(qc); //new - Changed the calculation to prevent infinite loops.
                         }
                     }
                 }
@@ -342,6 +335,29 @@ namespace QualityBionics
             if (__state.HasValue)
             {
                 __state.Value.First.addedPartProps.partEfficiency = __state.Value.Second;
+            }
+        }
+    }
+
+
+    [HarmonyPatch(typeof(Hediff), "GetTooltip")]
+    public static class Hediff_GetTooltip_Patch
+    {
+        private static void Prefix(out Pair<Hediff, float>? __state, Hediff __instance)
+        {
+            __state = null;
+            if (__instance is Hediff_AddedPart addedPart && addedPart.TryGetComp<HediffCompQualityBionics>(out var comp))
+            {
+                __state = new Pair<Hediff, float>(addedPart, addedPart.def.addedPartProps.partEfficiency);
+                addedPart.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * QualityBionicsSettings.GetQualityMultipliers(comp.quality);
+            }
+        }
+
+        private static void Postfix(Pair<Hediff, float>? __state)
+        {
+            if (__state.HasValue)
+            {
+                __state.Value.First.def.addedPartProps.partEfficiency = __state.Value.Second;
             }
         }
     }
