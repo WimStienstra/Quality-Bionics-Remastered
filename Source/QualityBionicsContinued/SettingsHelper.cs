@@ -1,14 +1,12 @@
-﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
-namespace QualityBionics
+namespace QualityBionicsContinued
 {
+    // These appear to have been lifted from somewhere unknown; as such I cannot in good faith
+    // say that they go under the license of the rest of this mod, so uh... re-using this code
+    // is **at your own risk**.
     internal static class SettingsHelper
     {
         // Token: 0x06000027 RID: 39 RVA: 0x00003754 File Offset: 0x00001954

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Library</OutputType>
@@ -7,8 +7,8 @@
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
 
-        <RootNamespace>QualityBionics</RootNamespace>
-        <AssemblyName>QualityBionics</AssemblyName>
+        <RootNamespace>QualityBionicsContinued</RootNamespace>
+        <AssemblyName>QualityBionicsContinued</AssemblyName>
         <VersionPrefix>0.1.0</VersionPrefix>
 
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -29,11 +29,16 @@
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
 
+    <ItemGroup>
+        <!-- Mod -->
+        <Compile Include="../Source/QualityBionicsContinued/**" />
+    </ItemGroup>
+
     <Choose>
         <When Condition="'$(RimWorldVersion)' == '1.5'">
             <PropertyGroup>
                 <DefineConstants>$(DefineConstants);v1_5</DefineConstants>
-                <OutputPath>Assemblies</OutputPath>
+                <OutputPath>../1.5/Assemblies</OutputPath>
             </PropertyGroup>
             <ItemGroup>
                 <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.*-*">

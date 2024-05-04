@@ -2,14 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
-namespace QualityBionics
+namespace QualityBionicsContinued
 {
-    class QualityBionicsSettings : ModSettings
+    class Settings : ModSettings
     {
         public static TechLevel minTechLevelForQuality = TechLevel.Industrial;
         public static Dictionary<QualityCategory, float> qualityMultipliers = new Dictionary<QualityCategory, float>
@@ -64,7 +62,7 @@ namespace QualityBionics
             var num = rect.width * 0.5f;
             listingStandard.ColumnWidth = num;
             listingStandard.Begin(rect);
-            listingStandard.Label("QB.BodyPartEfficiencyMultipliers".Translate());
+            listingStandard.Label("QualityBionicsContinued.BodyPartEfficiencyMultipliers".Translate());
             foreach (QualityCategory quality in Enum.GetValues(typeof(QualityCategory)))
             {
                 var value = qualityMultipliers[quality];
@@ -94,7 +92,7 @@ namespace QualityBionics
             }
 
             listingStandard.NewColumn();
-            listingStandard.Label("QB.BodyPartHPMultipliers".Translate());
+            listingStandard.Label("QualityBionicsContinued.BodyPartHPMultipliers".Translate());
             listingStandard.ColumnWidth = rect.width - num;
             foreach (QualityCategory quality in Enum.GetValues(typeof(QualityCategory)))
             {
@@ -130,8 +128,8 @@ namespace QualityBionics
 
             var newListing = new Listing_Standard();
             newListing.Begin(new Rect(inRect.x, listingStandard.CurHeight, inRect.width, inRect.height));
-            newListing.Label("QB.CurMinTechLevelForBionics".Translate(minTechLevelForQuality.ToStringHuman()));
-            if (newListing.ButtonText("QB.SelectMinTechLevelForQualityBionics".Translate()))
+            newListing.Label("QualityBionicsContinued.CurMinTechLevelForBionics".Translate(minTechLevelForQuality.ToStringHuman()));
+            if (newListing.ButtonText("QualityBionicsContinued.SelectMinTechLevelForQualityBionics".Translate()))
             {
                 var floatList = new List<FloatMenuOption>();
                 foreach (var value in Enum.GetValues(typeof(TechLevel)).Cast<TechLevel>())

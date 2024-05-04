@@ -5,6 +5,17 @@
     <supportedVersions>
         <li>1.5</li>
     </supportedVersions>
+    <modDependencies>
+        <li>
+            <packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</downloadUrl>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+        </li>
+    </modDependencies>
+    <loadAfter>
+        <li>brrainz.harmony</li>
+    </loadAfter>
     <packageId>ilyvion.QualityBionics</packageId>
     <description>Ever wondered why your intellectual colonists who have researched the secrests of the universe, or the crafters of your colonies who have produced artifacts of such quality that news of them spreads across the lands, can't seem to craft bionic equipment that has above standard efficiency?
 
