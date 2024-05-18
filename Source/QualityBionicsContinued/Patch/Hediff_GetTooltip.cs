@@ -1,5 +1,6 @@
 using HarmonyLib;
-using QualityBionicsContinued.Comps;
+using QualityBionics;
+//using QualityBionicsContinued.Comps;
 using Verse;
 
 namespace QualityBionicsContinued.Patch;

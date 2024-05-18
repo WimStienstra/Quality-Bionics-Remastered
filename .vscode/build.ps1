@@ -1,17 +1,28 @@
 $ErrorActionPreference = 'Stop'
 
+$Configuration = 'Release'
+
 $Target = "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\QualityBionicsContinued"
+
+$env:RimWorldSteamWorkshopFolderPath = "..\.deps\refs"
+#$env:RimWorldSteamWorkshopFolderPath = "C:\Program Files (x86)\Steam\steamapps\workshop\content\294100"
 
 # build dlls
 $env:RimWorldVersion = "1.5"
-dotnet build .vscode
-#dotnet build --configuration Release .vscode
+dotnet build --configuration $Configuration .vscode/mod.csproj
+if ($LASTEXITCODE -gt 0) {
+    throw "Build failed"
+}
+dotnet build --configuration $Configuration .vscode/qualitybionics.csproj
 if ($LASTEXITCODE -gt 0) {
     throw "Build failed"
 }
 
 # remove pdbs (for release)
-# Remove-Item -Path .\1.5\Assemblies\QualityBionicsContinued.pdb -ErrorAction SilentlyContinue
+if ($Configuration -eq "Release") {
+    Remove-Item -Path .\1.5\Assemblies\QualityBionicsContinued.pdb -ErrorAction SilentlyContinue
+    Remove-Item -Path .\1.5\Assemblies\QualityBionics.pdb -ErrorAction SilentlyContinue
+}
 
 # remove mod folder
 Remove-Item -Path $Target -Recurse -ErrorAction SilentlyContinue

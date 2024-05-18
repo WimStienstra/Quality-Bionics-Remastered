@@ -1,27 +1,18 @@
 name: Build
 
 on:
-    push:
-        branches:
-            - main
-        paths-ignore:
-            - "README.md"
-            - "CHANGELOG.md"
-            - ".gitignore"
-        tags-ignore:
-            # This will ignore release versions tagged with a version identifier. We'll
-            # use a separate workflow for them.
-            - "v*"
-    pull_request:
-        paths-ignore:
-            - README.md
-            - "CHANGELOG.md"
-            - ".gitignore"
+    workflow_call:
+        inputs:
+            artifact-suffix:
+                required: true
+                type: string
 
 jobs:
     build:
         name: Build
         runs-on: windows-latest
+        env:
+            RimWorldSteamWorkshopFolderPath: ..\.deps\refs
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
@@ -34,12 +25,14 @@ jobs:
             - name: Build Mod for 1.5
               env:
                   RimWorldVersion: 1.5
-              run: dotnet build .vscode --configuration Release
+              run: |
+                  dotnet build .vscode/mod.csproj --configuration Release
+                  dotnet build .vscode/qualitybionics.csproj --configuration Release
 
             - name: Upload Mod Artifacts
               uses: actions/upload-artifact@v4
               with:
-                  name: QualityBionicsContinued-${{ github.sha }}
+                  name: QualityBionicsContinued-${{ inputs.artifact-suffix }}
                   path: |
                       About/
                       1.5/

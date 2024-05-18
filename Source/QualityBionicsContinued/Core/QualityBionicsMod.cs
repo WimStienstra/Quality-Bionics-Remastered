@@ -1,8 +1,11 @@
 ﻿using HarmonyLib;
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Verse;
+
+[assembly: InternalsVisibleTo("QualityBionics")]
 
 namespace QualityBionicsContinued;
 
@@ -33,6 +36,11 @@ class QualityBionicsMod : Mod
     public static void Warning(string msg)
     {
         Log.Warning("[Quality Bionics (Continued)] " + msg);
+    }
+
+    public static void WarningOnce(string msg, int key)
+    {
+        Log.WarningOnce("[Quality Bionics (Continued)] " + msg, key);
     }
 
     public static void Error(string msg)

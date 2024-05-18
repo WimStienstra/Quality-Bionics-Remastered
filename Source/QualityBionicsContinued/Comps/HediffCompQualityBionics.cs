@@ -1,7 +1,9 @@
 using RimWorld;
 using Verse;
 
-namespace QualityBionicsContinued.Comps;
+// EBF compatibility requires us to use this old namespace, sadly.
+//namespace QualityBionicsContinued.Comps;
+namespace QualityBionics;
 
 public class HediffCompQualityBionics : HediffComp
 {
