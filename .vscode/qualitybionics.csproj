@@ -9,7 +9,7 @@
 
         <RootNamespace>QualityBionics</RootNamespace>
         <AssemblyName>QualityBionics</AssemblyName>
-        <VersionPrefix>0.1.0</VersionPrefix>
+        <VersionPrefix>0.2.0</VersionPrefix>
 
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 
@@ -55,6 +55,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="mod.csproj" />
+        <ProjectReference Include="mod.csproj" />
     </ItemGroup>
 </Project>
