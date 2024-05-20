@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   Use `__args` in `RecipeWorker_ApplyOnPawn` patch instead of named parameters so that subclasses renaming parameter names won't matter.
+
 ## [0.2.0] - 2024-05-18
 
 ### Fixed

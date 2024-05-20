@@ -59,8 +59,12 @@ internal static class RecipeWorker_ApplyOnPawn
 
     public static Pair<ThingDef, QualityCategory>? thingWithQuality;
 
-    public static void Prefix(RecipeWorker __instance, Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+    //public static void Prefix(RecipeWorker __instance, Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+    public static void Prefix(RecipeWorker __instance, object[] __args)
     {
+        Pawn pawn = (Pawn)__args[0];
+        BodyPartRecord part = (BodyPartRecord)__args[1];
+
         if (__instance.recipe?.removesHediff != null)
         {
             if (!pawn.health?.hediffSet?.GetNotMissingParts().Contains(part) ?? false)
@@ -83,8 +87,13 @@ internal static class RecipeWorker_ApplyOnPawn
 
 
     }
-    public static void Postfix(RecipeWorker __instance, Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+    //public static void Postfix(RecipeWorker __instance, Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+    public static void Postfix(RecipeWorker __instance, object[] __args)
     {
+        Pawn pawn = (Pawn)__args[0];
+        BodyPartRecord part = (BodyPartRecord)__args[1];
+        List<Thing> ingredients = (List<Thing>)__args[3];
+
         thingWithQuality = null;
         if (__instance.recipe?.addsHediff != null && ingredients != null)
         {
