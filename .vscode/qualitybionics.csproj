@@ -9,7 +9,7 @@
 
         <RootNamespace>QualityBionics</RootNamespace>
         <AssemblyName>QualityBionics</AssemblyName>
-        <VersionPrefix>0.2.0</VersionPrefix>
+        <VersionPrefix>0.2.1</VersionPrefix>
 
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 
