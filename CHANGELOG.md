@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+-   RimWorld 1.6 compatibility support
+-   Mod now supports both RimWorld 1.5 and 1.6
+
+### Changed
+
+-   Mod maintenance taken over by AssassinsBro
+-   Updated build system to support dual version compilation
+-   Removed "abandoned mod" warning from README
+
 ## [0.2.1] - 2024-05-20
 
 ### Fixed

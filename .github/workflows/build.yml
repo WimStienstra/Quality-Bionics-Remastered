@@ -29,6 +29,13 @@ jobs:
                   dotnet build .vscode/mod.csproj --configuration Release
                   dotnet build .vscode/qualitybionics.csproj --configuration Release
 
+            - name: Build Mod for 1.6
+              env:
+                  RimWorldVersion: 1.6
+              run: |
+                  dotnet build .vscode/mod.csproj --configuration Release
+                  dotnet build .vscode/qualitybionics.csproj --configuration Release
+
             - name: Upload Mod Artifacts
               uses: actions/upload-artifact@v4
               with:
@@ -36,6 +43,7 @@ jobs:
                   path: |
                       About/
                       1.5/
+                      1.6/
                       Common/
                       Defs/
                       Patches/
