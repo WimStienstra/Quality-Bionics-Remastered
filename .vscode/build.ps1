@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 $Configuration = 'Release'
 
-$Target = "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\QualityBionicsContinued"
+$Target = "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\QualityBionicsRemastered"
 
 $env:RimWorldSteamWorkshopFolderPath = "..\.deps\refs"
 #$env:RimWorldSteamWorkshopFolderPath = "C:\Program Files (x86)\Steam\steamapps\workshop\content\294100"
@@ -32,9 +32,9 @@ if ($LASTEXITCODE -gt 0) {
 
 # remove pdbs (for release)
 if ($Configuration -eq "Release") {
-    Remove-Item -Path .\1.5\Assemblies\QualityBionicsContinued.pdb -ErrorAction SilentlyContinue
+    Remove-Item -Path .\1.5\Assemblies\QualityBionicsRemastered.pdb -ErrorAction SilentlyContinue
     Remove-Item -Path .\1.5\Assemblies\QualityBionics.pdb -ErrorAction SilentlyContinue
-    Remove-Item -Path .\1.6\Assemblies\QualityBionicsContinued.pdb -ErrorAction SilentlyContinue
+    Remove-Item -Path .\1.6\Assemblies\QualityBionicsRemastered.pdb -ErrorAction SilentlyContinue
     Remove-Item -Path .\1.6\Assemblies\QualityBionics.pdb -ErrorAction SilentlyContinue
 }
 
@@ -46,6 +46,8 @@ Copy-Item -Path 1.5 $Target\1.5 -Recurse
 Copy-Item -Path 1.6 $Target\1.6 -Recurse
 
 Copy-Item -Path Common $Target\Common -Recurse
+
+Copy-Item -Path LoadFolders.xml $Target
 
 New-Item -Path $Target -ItemType Directory -Name About
 Copy-Item -Path About\About.xml $Target\About

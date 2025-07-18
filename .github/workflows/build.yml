@@ -39,7 +39,7 @@ jobs:
             - name: Upload Mod Artifacts
               uses: actions/upload-artifact@v4
               with:
-                  name: QualityBionicsContinued-${{ inputs.artifact-suffix }}
+                  name: QualityBionicsRemastered-${{ inputs.artifact-suffix }}
                   path: |
                       About/
                       1.5/

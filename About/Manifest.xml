@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Manifest>
-    <identifier>ilyvion.QualityBionics</identifier>
-    <version>0.2.1</version>
+    <identifier>assassinsbro.qualitybionicsremastered</identifier>
+    <version>0.3.0</version>
     <dependencies>
         <li>brrainz.harmony</li>
     </dependencies>
     <manifestUri>
-        https://raw.githubusercontent.com/ilyvion/Quality-Bionics-Continued/main/About/Manifest.xml</manifestUri>
-    <downloadUri>https://github.com/ilyvion/Quality-Bionics-Continued/releases/latest</downloadUri>
+        https://raw.githubusercontent.com/WimStienstra/Quality-Bionics-Continued/main/About/Manifest.xml</manifestUri>
+    <downloadUri>https://github.com/WimStienstra/Quality-Bionics-Continued/releases/latest</downloadUri>
 </Manifest>

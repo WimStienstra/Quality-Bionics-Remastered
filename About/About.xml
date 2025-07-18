@@ -1,9 +1,7 @@
-﻿<?    <n>Quality Bionics (Continued)</n>
-    <author>RebelRabbit, Taranchuk, ilyvion, AssassinsBro</author>
-    <supportedVersions> version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-    <name>Quality Bionics (Continued)</name>
-    <author>RebelRabbit, Taranchuk, ilyvion</author>
+    <name>Quality Bionics Remastered</name>
+    <author>RebelRabbit, Taranchuk, ilyvion, AssassinsBro</author>
     <supportedVersions>
         <li>1.5</li>
         <li>1.6</li>
@@ -19,10 +17,19 @@
     <loadAfter>
         <li>brrainz.harmony</li>
     </loadAfter>
-    <packageId>ilyvion.QualityBionics</packageId>
-    <description>Ever wondered why your intellectual colonists who have researched the secrests of the universe, or the crafters of your colonies who have produced artifacts of such quality that news of them spreads across the lands, can't seem to craft bionic equipment that has above standard efficiency?
+    <packageId>assassinsbro.qualitybionicsremastered</packageId>
+    <description>Ever wondered why your intellectual colonists who have researched the secrets of the universe, or the crafters of your colonies who have produced artifacts of such quality that news of them spreads across the lands, can't seem to craft bionic equipment that has above standard efficiency?
 
 Well, now you don't have to wonder any longer! Introducing quality bionics! Stronger bionics for smarter people.
 
-Prostheses at bionic level and above now have quality levels that affect the efficiency of the part. Because, let'ss face it, someone had to have figured out a way to make a circuit in the unit a little bit better.</description>
+Prostheses at bionic level and above now have quality levels that affect the efficiency of the part. Because, let's face it, someone had to have figured out a way to make a circuit in the unit a little bit better.
+
+=== REMASTERED VERSION ===
+This is a complete rewrite of the original mod with:
+- Modern thread-safe architecture
+- Non-destructive patching for better mod compatibility
+- Improved performance and stability
+- Dual RimWorld 1.5/1.6 support
+- Enhanced error handling and logging</description>
 </ModMetaData>
+

@@ -7,16 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-
--   RimWorld 1.6 compatibility support
--   Mod now supports both RimWorld 1.5 and 1.6
+## [0.3.0] - 2025-07-18 - REMASTERED VERSION
 
 ### Changed
+- **BREAKING**: Complete mod rewrite and rename to "Quality Bionics Remastered"
+- **Architecture**: Ground-up rewrite with modern thread-safe architecture
+- **Compatibility**: Non-destructive patching for better mod compatibility
+- **Performance**: Improved performance and stability with centralized management
+- **Namespaces**: All code moved from `QualityBionicsContinued` to `QualityBionicsRemastered`
+- **Package ID**: Changed to `assassinsbro.qualitybionicsremastered`
 
--   Mod maintenance taken over by AssassinsBro
--   Updated build system to support dual version compilation
--   Removed "abandoned mod" warning from README
+### Added
+- QualityBionicsManager: Centralized thread-safe management system
+- QualityTransferManager: Thread-safe quality transfer system with automatic cleanup
+- Enhanced error handling and comprehensive logging throughout
+- Improved tooltips showing detailed quality information
+- Custom stats reports for quality bionics
+
+### Fixed
+- Thread safety issues with concurrent collections
+- Memory leaks from uncleaned static variables
+- Mod conflicts from destructive definition modifications
+- Performance issues from inefficient LINQ operations
+
+### Technical
+- Replaced destructive prefix/postfix patches with safe postfix-only approach
+- Eliminated direct modification of shared game definitions
+- Implemented proper concurrent collections with expiration handling
+- Added comprehensive error recovery and logging systems
 
 ## [0.2.1] - 2024-05-20
 

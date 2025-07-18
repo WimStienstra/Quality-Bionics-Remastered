@@ -7,8 +7,8 @@
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
 
-        <RootNamespace>QualityBionicsContinued</RootNamespace>
-        <AssemblyName>QualityBionicsContinued</AssemblyName>
+        <RootNamespace>QualityBionicsRemastered</RootNamespace>
+        <AssemblyName>QualityBionicsRemastered</AssemblyName>
         <VersionPrefix>0.2.1</VersionPrefix>
 
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -31,7 +31,7 @@
 
     <ItemGroup>
         <!-- Mod -->
-        <Compile Include="../Source/QualityBionicsContinued/**" />
+        <Compile Include="../Source/QualityBionicsRemastered/**" />
     </ItemGroup>
 
     <Choose>

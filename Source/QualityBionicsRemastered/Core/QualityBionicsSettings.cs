@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 
-namespace QualityBionicsContinued
+namespace QualityBionicsRemastered
 {
     class Settings : ModSettings
     {
@@ -62,7 +62,7 @@ namespace QualityBionicsContinued
             var num = rect.width * 0.5f;
             listingStandard.ColumnWidth = num;
             listingStandard.Begin(rect);
-            listingStandard.Label("QualityBionicsContinued.BodyPartEfficiencyMultipliers".Translate());
+            listingStandard.Label("QualityBionicsRemastered.BodyPartEfficiencyMultipliers".Translate());
             foreach (QualityCategory quality in Enum.GetValues(typeof(QualityCategory)))
             {
                 var value = qualityMultipliers[quality];
@@ -92,7 +92,7 @@ namespace QualityBionicsContinued
             }
 
             listingStandard.NewColumn();
-            listingStandard.Label("QualityBionicsContinued.BodyPartHPMultipliers".Translate());
+            listingStandard.Label("QualityBionicsRemastered.BodyPartHPMultipliers".Translate());
             listingStandard.ColumnWidth = rect.width - num;
             foreach (QualityCategory quality in Enum.GetValues(typeof(QualityCategory)))
             {
@@ -128,8 +128,8 @@ namespace QualityBionicsContinued
 
             var newListing = new Listing_Standard();
             newListing.Begin(new Rect(inRect.x, listingStandard.CurHeight, inRect.width, inRect.height));
-            newListing.Label("QualityBionicsContinued.CurMinTechLevelForBionics".Translate(minTechLevelForQuality.ToStringHuman()));
-            if (newListing.ButtonText("QualityBionicsContinued.SelectMinTechLevelForQualityBionics".Translate()))
+            newListing.Label("QualityBionicsRemastered.CurMinTechLevelForBionics".Translate(minTechLevelForQuality.ToStringHuman()));
+            if (newListing.ButtonText("QualityBionicsRemastered.SelectMinTechLevelForQualityBionics".Translate()))
             {
                 var floatList = new List<FloatMenuOption>();
                 foreach (var value in Enum.GetValues(typeof(TechLevel)).Cast<TechLevel>())

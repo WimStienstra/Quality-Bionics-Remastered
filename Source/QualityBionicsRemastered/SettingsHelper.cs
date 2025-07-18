@@ -2,7 +2,7 @@
 using UnityEngine;
 using Verse;
 
-namespace QualityBionicsContinued
+namespace QualityBionicsRemastered
 {
     // These appear to have been lifted from somewhere unknown; as such I cannot in good faith
     // say that they go under the license of the rest of this mod, so uh... re-using this code

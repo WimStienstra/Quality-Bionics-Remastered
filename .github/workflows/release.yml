@@ -20,7 +20,7 @@ jobs:
         steps:
             - name: Set Environment Variables
               run: |
-                  echo "MOD_PATH=$HOME/QualityBionicsContinued" >> $GITHUB_ENV
+                  echo "MOD_PATH=$HOME/QualityBionicsRemastered" >> $GITHUB_ENV
                   echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
                   echo "NO_PREFIX_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
@@ -30,13 +30,13 @@ jobs:
             - name: Download Mod Artifacts from Build Step
               uses: actions/download-artifact@v4
               with:
-                  name: QualityBionicsContinued-Release
+                  name: QualityBionicsRemastered-Release
                   path: ${{ env.MOD_PATH }}
 
             - name: Zip Mod
               run: |
                   cd $HOME
-                  zip -r ./QualityBionicsContinued.zip ./QualityBionicsContinued/*
+                  zip -r ./QualityBionicsRemastered.zip ./QualityBionicsRemastered/*
 
             - name: Checkout Repository
               uses: actions/checkout@v4
@@ -67,5 +67,5 @@ jobs:
               with:
                   upload_url: ${{ steps.create_release.outputs.upload_url }}
                   asset_path: ${{ env.MOD_PATH }}.zip
-                  asset_name: QualityBionicsContinued-${{ env.VERSION }}.zip
+                  asset_name: QualityBionicsRemastered-${{ env.VERSION }}.zip
                   asset_content_type: application/zip

@@ -25,6 +25,6 @@ class QualityBionicsSettings
 {
     public float GetQualityMultipliersForHP(QualityCategory category)
     {
-        return QualityBionicsContinued.Settings.GetQualityMultipliersForHP(category);
+        return QualityBionicsRemastered.Settings.GetQualityMultipliersForHP(category);
     }
 }
