@@ -54,6 +54,7 @@ Copy-Item -Path About\About.xml $Target\About
 Copy-Item -Path About\Manifest.xml $Target\About
 Copy-Item -Path About\Preview.png $Target\About
 Copy-Item -Path About\ModIcon.png $Target\About
+Copy-Item -Path About\PublishedFileId.txt $Target\About
 
 Copy-Item -Path CHANGELOG.md $Target
 Copy-Item -Path LICENSE $Target

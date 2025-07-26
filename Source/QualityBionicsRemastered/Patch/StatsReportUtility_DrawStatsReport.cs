@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
-using QualityBionicsRemastered;
+using QualityBionics;
 using QualityBionicsRemastered.Core;
 using RimWorld;
 using UnityEngine;
@@ -11,66 +11,43 @@ using Verse;
 namespace QualityBionicsRemastered.Patch;
 
 /// <summary>
-/// Improved stats report patch that displays quality-adjusted efficiency without modifying shared definitions.
+/// Patch to temporarily modify efficiency values during stats display to show quality-adjusted values.
+/// DISABLED: This was interfering with the normal stats display. Quality info is now shown in tooltips only.
+/// Based on the working version from Quality-Bionics-Continued-main.
 /// </summary>
-[HarmonyPatch(typeof(StatsReportUtility), "DrawStatsReport", new Type[] { typeof(Rect), typeof(Thing) })]
+// [HarmonyPatch(typeof(StatsReportUtility), "DrawStatsReport", new Type[] { typeof(Rect), typeof(Thing) })]
 public static class StatsReportUtility_DrawStatsReport
 {
-    [HarmonyPrefix]
-    private static bool Prefix(Rect rect, Thing thing)
+    // [HarmonyPrefix]
+    private static void Prefix(Rect rect, Thing thing, out Pair<HediffDef, float>? __state)
     {
-        try
+        __state = null;
+        if (thing.def.isTechHediff)
         {
-            // Only intercept for quality bionics
-            if (!thing.def.isTechHediff || !thing.TryGetQuality(out var quality))
-                return true;
+            if (thing.TryGetQuality(out var qc))
+            {
+                IEnumerable<RecipeDef> enumerable = DefDatabase<RecipeDef>.AllDefs.Where((RecipeDef x) => x.addsHediff != null && x.IsIngredient(thing.def));
+                foreach (RecipeDef item6 in enumerable)
+                {
+                    HediffDef diff = item6.addsHediff;
 
-            var relevantRecipes = DefDatabase<RecipeDef>.AllDefs
-                .Where(recipe => recipe.addsHediff != null && recipe.IsIngredient(thing.def))
-                .Where(recipe => QualityBionicsManager.IsQualityBionic(recipe.addsHediff))
-                .ToList();
-
-            if (!relevantRecipes.Any())
-                return true;
-
-            // Create a custom stats display for quality bionics
-            DrawCustomStatsReport(rect, thing, quality, relevantRecipes);
-            return false; // Skip original method
-        }
-        catch (Exception ex)
-        {
-            QualityBionicsMod.Warning($"Error in StatsReportUtility_DrawStatsReport: {ex.Message}");
-            return true; // Fall back to original method
+                    if ((diff.comps?.Any(x => x?.GetType() == typeof(HediffCompProperties_QualityBionics)) ?? false) && diff.addedPartProps != null)
+                    {
+                        __state = new Pair<HediffDef, float>(diff, diff.addedPartProps.partEfficiency);
+                        diff.addedPartProps.partEfficiency = diff.comps.OfType<HediffCompProperties_QualityBionics>().First().baseEfficiency * Settings.GetQualityMultipliers(qc);
+                        QualityBionicsMod.Message($"Applied quality {qc} to stats display for {diff.defName}: efficiency now {diff.addedPartProps.partEfficiency:P0}");
+                    }
+                }
+            }
         }
     }
 
-    private static void DrawCustomStatsReport(Rect rect, Thing thing, QualityCategory quality, List<RecipeDef> relevantRecipes)
+    // [HarmonyPostfix]
+    private static void Postfix(Rect rect, Thing thing, Pair<HediffDef, float>? __state)
     {
-        GUI.BeginGroup(rect);
-        var currentY = 0f;
-
-        // Draw quality indicator
-        Text.Font = GameFont.Medium;
-        var qualityRect = new Rect(0f, currentY, rect.width, 30f);
-        Widgets.Label(qualityRect, $"{thing.LabelCap} ({quality})");
-        currentY += 35f;
-
-        Text.Font = GameFont.Small;
-
-        // Draw efficiency stats for each relevant recipe
-        foreach (var recipe in relevantRecipes)
+        if (__state.HasValue)
         {
-            var hediffDef = recipe.addsHediff;
-            var baseEfficiency = QualityBionicsManager.GetBaseEfficiency(hediffDef);
-            var qualityMultiplier = Settings.GetQualityMultipliers(quality);
-            var finalEfficiency = baseEfficiency * qualityMultiplier;
-
-            var efficiencyRect = new Rect(0f, currentY, rect.width, 20f);
-            var label = $"Part efficiency: {finalEfficiency:P0} (base: {baseEfficiency:P0}, quality: +{(qualityMultiplier - 1f):P0})";
-            Widgets.Label(efficiencyRect, label);
-            currentY += 25f;
+            __state.Value.First.addedPartProps.partEfficiency = __state.Value.Second;
         }
-
-        GUI.EndGroup();
     }
 }
