@@ -8,36 +8,13 @@ using QualityBionicsRemastered;
 
 namespace QualityBionicsRemastered.Core
 {
+    /// <summary>
+    /// Manager for quality bionics functionality.
+    /// </summary>
     public static class QualityBionicsManager
     {
         private static readonly Dictionary<HediffDef, float> _baseEfficiencyCache = new Dictionary<HediffDef, float>();
-        private static readonly HashSet<ThingDef> _qualityEnabledThings = new HashSet<ThingDef>();
         private static readonly object _lockObject = new object();
-        private static bool _initialized = false;
-
-        /// <summary>
-        /// Initialize the quality bionics system. Called during mod startup.
-        /// </summary>
-        public static void Initialize()
-        {
-            if (_initialized) return;
-
-            lock (_lockObject)
-            {
-                if (_initialized) return;
-
-                try
-                {
-                    InitializeQualityBionics();
-                    _initialized = true;
-                    QualityBionicsMod.Message("Quality Bionics system initialized successfully");
-                }
-                catch (Exception ex)
-                {
-                    QualityBionicsMod.Error($"Failed to initialize Quality Bionics system: {ex}");
-                }
-            }
-        }
 
         /// <summary>
         /// Check if a hediff is eligible for quality bionics.
@@ -135,50 +112,6 @@ namespace QualityBionicsRemastered.Core
             }
         }
 
-        private static void InitializeQualityBionics()
-        {
-            var customTypes = new HashSet<string> { "synthetic", "cybernetic" };
-            int processedCount = 0;
-
-            foreach (var hediffDef in DefDatabase<HediffDef>.AllDefs)
-            {
-                if (!IsQualityEligible(hediffDef)) continue;
-
-                try
-                {
-                    // Store base efficiency
-                    GetBaseEfficiency(hediffDef);
-
-                    // Add quality component to hediff
-                    hediffDef.comps ??= new List<HediffCompProperties>();
-                    if (!hediffDef.comps.Any(x => x.GetType() == typeof(HediffCompProperties_QualityBionics)))
-                    {
-                        hediffDef.comps.Add(new HediffCompProperties_QualityBionics 
-                        { 
-                            baseEfficiency = hediffDef.addedPartProps.partEfficiency 
-                        });
-                    }
-
-                    // Add quality component to spawned thing
-                    var thingDef = hediffDef.spawnThingOnRemoved;
-                    thingDef.comps ??= new List<CompProperties>();
-                    if (!thingDef.comps.Any(x => x.compClass == typeof(CompQuality)))
-                    {
-                        thingDef.comps.Add(new CompProperties { compClass = typeof(CompQuality) });
-                        _qualityEnabledThings.Add(thingDef);
-                    }
-
-                    processedCount++;
-                }
-                catch (Exception ex)
-                {
-                    QualityBionicsMod.Warning($"Failed to process hediff {hediffDef.defName}: {ex.Message}");
-                }
-            }
-
-            QualityBionicsMod.Message($"Processed {processedCount} hediffs for quality bionics");
-        }
-
         private static bool IsCustomBionicType(string defName)
         {
             // This could be expanded to read from settings or external configuration
@@ -219,19 +152,6 @@ namespace QualityBionicsRemastered.Core
         public static ThingDef? GetThingDefFromHediffDef(HediffDef hediffDef)
         {
             return hediffDef?.spawnThingOnRemoved;
-        }
-
-        /// <summary>
-        /// Clean up resources. Called when the mod is being unloaded.
-        /// </summary>
-        public static void Cleanup()
-        {
-            lock (_lockObject)
-            {
-                _baseEfficiencyCache.Clear();
-                _qualityEnabledThings.Clear();
-                _initialized = false;
-            }
         }
     }
 }

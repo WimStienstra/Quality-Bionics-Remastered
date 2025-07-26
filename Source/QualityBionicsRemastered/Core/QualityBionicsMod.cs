@@ -19,7 +19,6 @@ class QualityBionicsMod : Mod
             new Harmony(Constants.Id).PatchAll(Assembly.GetExecutingAssembly());
             GetSettings<Settings>();
             
-            QualityBionicsManager.Initialize();
             Message("Quality Bionics Remastered loaded successfully");
         }
         catch (Exception ex)

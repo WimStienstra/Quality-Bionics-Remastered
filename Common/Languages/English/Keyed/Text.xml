@@ -4,4 +4,7 @@
     <QualityBionicsRemastered.BodyPartHPMultipliers>Body part HP multipliers: </QualityBionicsRemastered.BodyPartHPMultipliers>
     <QualityBionicsRemastered.CurMinTechLevelForBionics>Current minimum tech level for quality bionics: {0}</QualityBionicsRemastered.CurMinTechLevelForBionics>
     <QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>Select minimum tech level for quality bionics</QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>
+    <QualityBionicsRemastered.PartEfficiency>Part efficiency</QualityBionicsRemastered.PartEfficiency>
+    <QualityBionicsRemastered.QualityBonus>Quality bonus</QualityBionicsRemastered.QualityBonus>
+    <QualityBionicsRemastered.HPMultiplier>HP multiplier</QualityBionicsRemastered.HPMultiplier>
 </LanguageData>

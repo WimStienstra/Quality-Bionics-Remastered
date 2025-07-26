@@ -1,57 +1,54 @@
 using System.Linq;
 using HarmonyLib;
-using QualityBionicsRemastered;
+using QualityBionics;
 using QualityBionicsRemastered.Core;
 using Verse;
 
 namespace QualityBionicsRemastered.Patch;
 
 /// <summary>
-/// Improved health calculation patch that applies quality multipliers to bionic health.
+/// Patch to apply quality HP multipliers to bionic body parts.
 /// </summary>
 [HarmonyPatch(typeof(BodyPartDef), nameof(BodyPartDef.GetMaxHealth))]
-public static class BodyPartDef_GetMaxHealth
+public class BodyPartDef_GetMaxHealth
 {
     [HarmonyPrepare]
     private static bool ShouldPatch()
     {
-        // Skip if EBF is running to avoid conflicts
-        var hasEBF = LoadedModManager.RunningMods.Any(m => m.PackageIdPlayerFacing == "V1024.EBFramework");
-        if (hasEBF)
+        // Skip if EBF is running
+        if (LoadedModManager.RunningMods.Any(m => m.PackageIdPlayerFacing == "V1024.EBFramework"))
         {
-            QualityBionicsMod.WarningOnce("Skipping BodyPartDef_GetMaxHealth patch since EBF is present", 0x1337 + 0x69 - 0x420 + 0x1986);
+            QualityBionicsMod.WarningOnce("Skipping BodyPartDef_GetMaxHealth patch since EBF is present", 0x1337);
+            return false;
         }
-        return !hasEBF;
+        return true;
     }
 
     [HarmonyPriority(Priority.Last)]
-    [HarmonyPostfix]
     private static void Postfix(BodyPartDef __instance, Pawn pawn, ref float __result)
     {
         try
         {
-            if (pawn?.health?.hediffSet?.hediffs == null) return;
-
-            // Look for quality bionics on this body part
             foreach (var hediff in pawn.health.hediffSet.hediffs)
             {
-                if (hediff.Part?.def != __instance) continue;
-
-                var quality = QualityBionicsManager.GetQualityFromHediff(hediff);
-                if (quality != null)
+                if (hediff.Part?.def == __instance)
                 {
-                    var multiplier = Settings.GetQualityMultipliersForHP(quality.Value);
-                    __result *= multiplier;
-                    __result = (int)__result; // Keep as integer for consistency
-
-                    QualityBionicsMod.Message($"Applied health multiplier {multiplier:F2} to {__instance.label} ({quality.Value})");
-                    break; // Only apply the first quality bionic found on this part
+                    var comp = hediff.TryGetComp<HediffCompQualityBionics>();
+                    if (comp != null)
+                    {
+                        float hpMultiplier = Settings.GetQualityMultipliersForHP(comp.quality);
+                        __result *= hpMultiplier;
+                        __result = (int)__result;
+                        
+                        QualityBionicsMod.Message($"Applied HP multiplier {hpMultiplier} for quality {comp.quality} to {__instance.defName}");
+                        break;
+                    }
                 }
             }
         }
         catch (System.Exception ex)
         {
-            QualityBionicsMod.Warning($"Error in BodyPartDef_GetMaxHealth: {ex.Message}");
+            QualityBionicsMod.Warning($"Error in BodyPartDef_GetMaxHealth patch: {ex.Message}");
         }
     }
 }

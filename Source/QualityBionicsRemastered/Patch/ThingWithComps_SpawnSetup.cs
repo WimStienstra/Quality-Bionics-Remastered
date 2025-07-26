@@ -6,7 +6,8 @@ using Verse;
 namespace QualityBionicsRemastered.Patch;
 
 /// <summary>
-/// Improved spawn setup patch that uses the new thread-safe transfer system.
+/// Spawn setup patch that applies quality from removal operations.
+/// Based on the original mod approach.
 /// </summary>
 [HarmonyPatch(typeof(ThingWithComps), "SpawnSetup")]
 public static class ThingWithComps_SpawnSetup
@@ -18,12 +19,31 @@ public static class ThingWithComps_SpawnSetup
         {
             if (__instance?.def == null) return;
 
-            // Try to apply quality from our transfer system
-            if (QualityTransferManager.TryConsumeTransfer(__instance, out var quality))
+            // Check if this matches a stored removal quality
+            if (RecipeWorker_ApplyOnPawn.thingWithQuality.HasValue && __instance.def == RecipeWorker_ApplyOnPawn.thingWithQuality.Value.First)
             {
-                if (QualityBionicsManager.TryApplyQuality(__instance, quality))
+                var comp = __instance.TryGetComp<CompQuality>();
+                if (comp != null)
                 {
-                    QualityBionicsMod.Message($"Applied quality {quality} to spawned {__instance.def.label}");
+                    comp.SetQuality(RecipeWorker_ApplyOnPawn.thingWithQuality.Value.Second, ArtGenerationContext.Colony);
+                    QualityBionicsMod.Message($"Applied stored quality {RecipeWorker_ApplyOnPawn.thingWithQuality.Value.Second} to spawned {__instance.def.label}");
+                    RecipeWorker_ApplyOnPawn.thingWithQuality = null;
+                }
+            }
+
+            // Check for medical recipes quality transfer
+            if (MedicalRecipesUtility_SpawnThingsFromHediffs.thingsWithQualities != null)
+            {
+                var pair = MedicalRecipesUtility_SpawnThingsFromHediffs.thingsWithQualities.FirstOrDefault(x => x.HasValue && x.Value.First == __instance.def);
+                if (pair.HasValue)
+                {
+                    var comp = __instance.TryGetComp<CompQuality>();
+                    if (comp != null)
+                    {
+                        comp.SetQuality(pair.Value.Second, ArtGenerationContext.Colony);
+                        QualityBionicsMod.Message($"Applied medical quality {pair.Value.Second} to spawned {__instance.def.label}");
+                        MedicalRecipesUtility_SpawnThingsFromHediffs.thingsWithQualities.Remove(pair);
+                    }
                 }
             }
         }
