@@ -9,21 +9,21 @@ namespace QualityBionicsRemastered.Patch;
 /// Patch to add efficiency and HP stats to bionic items based on their quality.
 /// This makes the stats show up in the item description and allows proper saving/loading.
 /// </summary>
-[HarmonyPatch(typeof(Thing), "GetStatValue")]
+[HarmonyPatch(typeof(StatUtility), "GetStatValue")]
 public static class Thing_GetStatValue
 {
     [HarmonyPostfix]
-    private static void Postfix(ref float __result, Thing __instance, StatDef stat, bool applyPostProcess = true)
+    private static void Postfix(ref float __result, Thing thing, StatDef stat, bool applyPostProcess)
     {
         try
         {
-            if (__instance?.def == null || !__instance.def.isTechHediff) return;
+            if (thing?.def == null || !thing.def.isTechHediff) return;
 
             // Check if this thing has quality
-            if (!__instance.TryGetQuality(out var quality)) return;
+            if (!thing.TryGetQuality(out var quality)) return;
 
             // Find the corresponding hediff
-            var correspondingHediff = FindCorrespondingHediffDef(__instance.def);
+            var correspondingHediff = FindCorrespondingHediffDef(thing.def);
             if (correspondingHediff == null || !QualityBionicsManager.IsQualityEligible(correspondingHediff)) return;
 
             // Apply quality modifiers to relevant stats
@@ -35,13 +35,13 @@ public static class Thing_GetStatValue
                 
                 // Override the result with our quality-modified efficiency
                 __result = finalEfficiency;
-                QualityBionicsMod.Message($"Applied efficiency stat {finalEfficiency} (base: {baseEfficiency}, quality: {qualityMultiplier}) to {__instance.def.defName}");
+                QualityBionicsMod.Message($"Applied efficiency stat {finalEfficiency} (base: {baseEfficiency}, quality: {qualityMultiplier}) to {thing.def.defName}");
             }
             else if (stat == StatDefOf.MaxHitPoints)
             {
                 var hpMultiplier = Settings.GetQualityMultipliersForHP(quality);
                 __result *= hpMultiplier;
-                QualityBionicsMod.Message($"Applied HP multiplier {hpMultiplier} to {__instance.def.defName}, result: {__result}");
+                QualityBionicsMod.Message($"Applied HP multiplier {hpMultiplier} to {thing.def.defName}, result: {__result}");
             }
         }
         catch (System.Exception ex)
