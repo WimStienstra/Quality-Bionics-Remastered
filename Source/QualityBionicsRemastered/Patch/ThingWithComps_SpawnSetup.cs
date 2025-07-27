@@ -26,7 +26,7 @@ public static class ThingWithComps_SpawnSetup
                 if (comp != null)
                 {
                     comp.SetQuality(RecipeWorker_ApplyOnPawn.thingWithQuality.Value.Second, ArtGenerationContext.Colony);
-                    QualityBionicsMod.Message($"Applied stored quality {RecipeWorker_ApplyOnPawn.thingWithQuality.Value.Second} to spawned {__instance.def.label}");
+                    QualityBionicsMod.Message($"Quality {RecipeWorker_ApplyOnPawn.thingWithQuality.Value.Second} bionic extracted: {__instance.def.label}");
                     RecipeWorker_ApplyOnPawn.thingWithQuality = null;
                 }
             }
@@ -41,7 +41,7 @@ public static class ThingWithComps_SpawnSetup
                     if (comp != null)
                     {
                         comp.SetQuality(pair.Value.Second, ArtGenerationContext.Colony);
-                        QualityBionicsMod.Message($"Applied medical quality {pair.Value.Second} to spawned {__instance.def.label}");
+                        // QualityBionicsMod.Message($"Applied medical quality {pair.Value.Second} to spawned {__instance.def.label}");
                         MedicalRecipesUtility_SpawnThingsFromHediffs.thingsWithQualities.Remove(pair);
                     }
                 }

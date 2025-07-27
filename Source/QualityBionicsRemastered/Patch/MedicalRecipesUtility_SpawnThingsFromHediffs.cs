@@ -36,7 +36,7 @@ public static class MedicalRecipesUtility_SpawnThingsFromHediffs
                                 thingsWithQualities = new List<Pair<ThingDef, QualityCategory>?>();
                             }
                             thingsWithQualities.Add(new Pair<ThingDef, QualityCategory>(item.def.spawnThingOnRemoved, comp.quality));
-                            QualityBionicsMod.Message($"Registered medical quality {comp.quality} for {item.def.spawnThingOnRemoved.defName}");
+                            // QualityBionicsMod.Message($"Registered medical quality {comp.quality} for {item.def.spawnThingOnRemoved.defName}");
                         }
                     }
                 }

@@ -40,7 +40,7 @@ public class BodyPartDef_GetMaxHealth
                         __result *= hpMultiplier;
                         __result = (int)__result;
                         
-                        QualityBionicsMod.Message($"Applied HP multiplier {hpMultiplier} for quality {comp.quality} to {__instance.defName}");
+                        // QualityBionicsMod.Message($"Applied HP multiplier {hpMultiplier} for quality {comp.quality} to {__instance.defName}");
                         break;
                     }
                 }

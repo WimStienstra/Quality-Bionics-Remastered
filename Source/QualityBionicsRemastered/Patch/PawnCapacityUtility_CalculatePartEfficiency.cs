@@ -37,7 +37,7 @@ public class PawnCapacityUtility_CalculatePartEfficiency
                         {
                             __state = new Pair<Hediff, float>(hediff_AddedPart, hediff_AddedPart.def.addedPartProps.partEfficiency);
                             hediff_AddedPart.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * Settings.GetQualityMultipliers(comp.quality);
-                            QualityBionicsMod.Message($"[PARENT] Applied quality {comp.quality} efficiency to {hediff_AddedPart.def.defName}: base={comp.Props.baseEfficiency} * multiplier={Settings.GetQualityMultipliers(comp.quality)} = {hediff_AddedPart.def.addedPartProps.partEfficiency}");
+                            // QualityBionicsMod.Message($"[PARENT] Applied quality {comp.quality} efficiency to {hediff_AddedPart.def.defName}: base={comp.Props.baseEfficiency} * multiplier={Settings.GetQualityMultipliers(comp.quality)} = {hediff_AddedPart.def.addedPartProps.partEfficiency}");
                             return;
                         }
                     }
@@ -64,7 +64,7 @@ public class PawnCapacityUtility_CalculatePartEfficiency
                             {
                                 __state = new Pair<Hediff, float>(hediff_AddedPart2, hediff_AddedPart2.def.addedPartProps.partEfficiency);
                                 hediff_AddedPart2.def.addedPartProps.partEfficiency = comp.Props.baseEfficiency * Settings.GetQualityMultipliers(comp.quality);
-                                QualityBionicsMod.Message($"[DIRECT] Applied quality {comp.quality} efficiency to {hediff_AddedPart2.def.defName}: base={comp.Props.baseEfficiency} * multiplier={Settings.GetQualityMultipliers(comp.quality)} = {hediff_AddedPart2.def.addedPartProps.partEfficiency}");
+                                // QualityBionicsMod.Message($"[DIRECT] Applied quality {comp.quality} efficiency to {hediff_AddedPart2.def.defName}: base={comp.Props.baseEfficiency} * multiplier={Settings.GetQualityMultipliers(comp.quality)} = {hediff_AddedPart2.def.addedPartProps.partEfficiency}");
                                 return;
                             }
                         }

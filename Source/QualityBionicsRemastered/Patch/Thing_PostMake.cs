@@ -31,15 +31,15 @@ public static class Thing_PostMake
             
             // Check if the thing has CompQuality component
             var hasCompQuality = __instance.HasComp<CompQuality>();
-            QualityBionicsMod.Message($"{__instance.def.defName} has CompQuality component: {hasCompQuality}");
+            // QualityBionicsMod.Message($"{__instance.def.defName} has CompQuality component: {hasCompQuality}");
 
             // Generate random quality and apply it
             var randomQuality = GenerateRandomQuality();
-            QualityBionicsMod.Message($"Attempting to apply quality {randomQuality} to {__instance.def.defName}");
+            // QualityBionicsMod.Message($"Attempting to apply quality {randomQuality} to {__instance.def.defName}");
             
             if (QualityBionicsManager.TryApplyQuality(__instance, randomQuality))
             {
-                QualityBionicsMod.Message($"Successfully applied quality {randomQuality} to {__instance.def.label}");
+                // QualityBionicsMod.Message($"Successfully applied quality {randomQuality} to {__instance.def.label}");
             }
             else
             {

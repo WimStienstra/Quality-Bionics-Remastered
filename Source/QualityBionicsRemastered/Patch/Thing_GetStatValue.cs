@@ -1,3 +1,4 @@
+using System;
 using HarmonyLib;
 using QualityBionicsRemastered.Core;
 using RimWorld;
@@ -8,11 +9,13 @@ namespace QualityBionicsRemastered.Patch;
 /// <summary>
 /// Patch to add efficiency and HP stats to bionic items based on their quality.
 /// This makes the stats show up in the item description and allows proper saving/loading.
+/// DISABLED: StatUtility.GetStatValue with this signature doesn't exist in RimWorld.
+/// Quality effects are handled through other patches like PawnCapacityUtility_CalculatePartEfficiency.
 /// </summary>
-[HarmonyPatch(typeof(StatUtility), "GetStatValue")]
+// [HarmonyPatch(typeof(StatUtility), "GetStatValue", new Type[] { typeof(Thing), typeof(StatDef), typeof(bool) })]
 public static class Thing_GetStatValue
 {
-    [HarmonyPostfix]
+    // [HarmonyPostfix]
     private static void Postfix(ref float __result, Thing thing, StatDef stat, bool applyPostProcess)
     {
         try

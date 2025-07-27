@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ModMetaData>
     <name>Quality Bionics Remastered</name>
     <author>RebelRabbit, Taranchuk, ilyvion, AssassinsBro</author>
@@ -6,19 +7,20 @@
         <li>1.5</li>
         <li>1.6</li>
     </supportedVersions>
+    <packageId>assassinsbro.qualitybionicsremastered</packageId>
     <modDependencies>
         <li>
             <packageId>brrainz.harmony</packageId>
             <displayName>Harmony</displayName>
-            <downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</downloadUrl>
             <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+            <downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</downloadUrl>
         </li>
     </modDependencies>
     <loadAfter>
         <li>brrainz.harmony</li>
     </loadAfter>
-    <packageId>assassinsbro.qualitybionicsremastered</packageId>
-    <description>Ever wondered why your intellectual colonists who have researched the secrets of the universe, or the crafters of your colonies who have produced artifacts of such quality that news of them spreads across the lands, can't seem to craft bionic equipment that has above standard efficiency?
+    <description>
+Ever wondered why your intellectual colonists who have researched the secrets of the universe, or the crafters of your colonies who have produced artifacts of such quality that news of them spreads across the lands, can't seem to craft bionic equipment that has above standard efficiency?
 
 Well, now you don't have to wonder any longer! Introducing quality bionics! Stronger bionics for smarter people.
 
@@ -30,6 +32,6 @@ This is a complete rewrite of the original mod with:
 - Non-destructive patching for better mod compatibility
 - Improved performance and stability
 - Dual RimWorld 1.5/1.6 support
-- Enhanced error handling and logging</description>
+- Enhanced error handling and logging
+    </description>
 </ModMetaData>
-

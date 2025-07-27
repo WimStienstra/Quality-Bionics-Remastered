@@ -88,7 +88,7 @@ internal static class RecipeWorker_ApplyOnPawn
                         if (comp != null)
                         {
                             thingWithQuality = new Pair<ThingDef, QualityCategory>(hediff.def.spawnThingOnRemoved, comp.quality);
-                            QualityBionicsMod.Message($"Stored quality {comp.quality} for removal of {hediff.def.spawnThingOnRemoved.defName}");
+                            // QualityBionicsMod.Message($"Stored quality {comp.quality} for removal of {hediff.def.spawnThingOnRemoved.defName}");
                         }
                     }
                 }
@@ -128,7 +128,7 @@ internal static class RecipeWorker_ApplyOnPawn
                             if (ingredient != null && hediff.def.spawnThingOnRemoved == ingredient.def && ingredient.TryGetQuality(out var qualityCategory))
                             {
                                 comp.quality = qualityCategory;
-                                QualityBionicsMod.Message($"Transferred quality {qualityCategory} from {ingredient.def.defName} to installed hediff {hediff.def.defName}");
+                                QualityBionicsMod.Message($"Quality {qualityCategory} bionic installed: {hediff.def.defName}");
                                 break;
                             }
                         }
