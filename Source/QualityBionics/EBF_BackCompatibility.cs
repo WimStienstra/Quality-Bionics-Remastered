@@ -19,6 +19,11 @@ class GetMaxHealth_Patch
 class QualityBionicsMod
 {
     public static QualityBionicsSettings settings = new();
+    
+    public static void WarningOnce(string msg, int key)
+    {
+        QualityBionicsRemastered.QualityBionicsMod.WarningOnce(msg, key);
+    }
 }
 
 class QualityBionicsSettings
@@ -26,5 +31,24 @@ class QualityBionicsSettings
     public float GetQualityMultipliersForHP(QualityCategory category)
     {
         return QualityBionicsRemastered.Settings.GetQualityMultipliersForHP(category);
+    }
+
+    public float GetQualityMultipliers(QualityCategory category)
+    {
+        return QualityBionicsRemastered.Settings.GetQualityMultipliers(category);
+    }
+}
+
+// Direct settings access for EBF compatibility
+class Settings
+{
+    public static float GetQualityMultipliersForHP(QualityCategory category)
+    {
+        return QualityBionicsRemastered.Settings.GetQualityMultipliersForHP(category);
+    }
+
+    public static float GetQualityMultipliers(QualityCategory category)
+    {
+        return QualityBionicsRemastered.Settings.GetQualityMultipliers(category);
     }
 }
