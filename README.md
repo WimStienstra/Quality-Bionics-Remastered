@@ -6,6 +6,41 @@
 
 *This is a ground-up rewrite of the original Quality Bionics mod with modern architecture, improved stability, and enhanced compatibility.*
 
+## Development
+
+### Project Structure
+
+The project has been restructured to use proper Visual Studio project conventions:
+
+- **Solution File**: `QualityBionics-Continued.sln` (in root directory)
+- **Projects**:
+  - `Source/QualityBionicsRemastered/` - Main mod functionality (namespace: `QualityBionicsRemastered`)
+  - `Source/QualityBionics/` - Backward compatibility layer (namespace: `QualityBionics`)
+
+### Building the Mod
+
+#### Using Visual Studio
+1. Open `QualityBionics-Continued.sln` in Visual Studio
+2. Select Release configuration
+3. Build → Build Solution (or Ctrl+Shift+B)
+
+#### Using Command Line
+```batch
+# Build for both RimWorld 1.5 and 1.6
+.\build.bat
+
+# Or build manually for specific version
+set RimWorldVersion=1.5
+dotnet build QualityBionics-Continued.sln --configuration Release
+```
+
+#### Using VS Code
+Use Ctrl+Shift+P → "Tasks: Run Task" → "build dll"
+
+### Default Namespace
+
+The default namespace is **`QualityBionicsRemastered`** to maintain compatibility across future forks and minimize breaking changes.
+
 # Have you ever wondered...
 ...why your intellectual colonists who have researched the secrets of the universe, or the crafters of your colonies who have produced artifacts of such quality that news of them spreads across the lands, can't seem to craft bionic equipment that has above standard efficiency?
 

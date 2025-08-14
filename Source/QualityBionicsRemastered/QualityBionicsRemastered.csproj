@@ -12,6 +12,7 @@
         <VersionPrefix>0.2.1</VersionPrefix>
 
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
 
         <!-- Intellisense doesn't work without specifying this, but allow override from environment -->
         <RimWorldVersion Condition="'$(RimWorldVersion)' == ''">1.5</RimWorldVersion>
@@ -29,16 +30,13 @@
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
 
-    <ItemGroup>
-        <!-- Mod -->
-        <Compile Include="../Source/QualityBionicsRemastered/**" />
-    </ItemGroup>
+
 
     <Choose>
         <When Condition="'$(RimWorldVersion)' == '1.5'">
             <PropertyGroup>
                 <DefineConstants>$(DefineConstants);v1_5</DefineConstants>
-                <OutputPath>../1.5/Assemblies</OutputPath>
+                <OutputPath>../../1.5/Assemblies</OutputPath>
             </PropertyGroup>
             <ItemGroup>
                 <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.*-*">
@@ -49,7 +47,7 @@
         <When Condition="'$(RimWorldVersion)' == '1.6'">
             <PropertyGroup>
                 <DefineConstants>$(DefineConstants);v1_6</DefineConstants>
-                <OutputPath>../1.6/Assemblies</OutputPath>
+                <OutputPath>../../1.6/Assemblies</OutputPath>
             </PropertyGroup>
             <ItemGroup>
                 <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.*-*">
