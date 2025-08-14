@@ -13,21 +13,11 @@ dotnet build --configuration $Configuration Source/QualityBionicsRemastered/Qual
 if ($LASTEXITCODE -gt 0) {
     throw "Build failed"
 }
-dotnet build --configuration $Configuration Source/QualityBionics/QualityBionics.csproj
-if ($LASTEXITCODE -gt 0) {
-    throw "Build failed"
-}
 
 $env:RimWorldVersion = "1.6"
 dotnet build --configuration $Configuration Source/QualityBionicsRemastered/QualityBionicsRemastered.csproj
 if ($LASTEXITCODE -gt 0) {
     throw "Build failed"
-}
-# Try to build qualitybionics for 1.6, but if it fails, copy from 1.5 (compatibility)
-dotnet build --configuration $Configuration Source/QualityBionics/QualityBionics.csproj
-if ($LASTEXITCODE -gt 0) {
-    Write-Warning "Building QualityBionics for 1.6 failed, copying from 1.5 (compatibility)"
-    Copy-Item "1.5\Assemblies\QualityBionics.dll" "1.6\Assemblies\QualityBionics.dll" -Force
 }
 
 # remove pdbs (for release)

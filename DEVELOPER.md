@@ -2,25 +2,25 @@
 
 ## Project Structure Overview
 
-This project has been restructured to follow Visual Studio conventions and modern .NET SDK project standards.
+This project has been completely restructured to follow Visual Studio conventions with a single, unified project using the `QualityBionicsRemastered` namespace throughout.
 
 ### Key Files
 
 - **`QualityBionics-Continued.sln`** - Main Visual Studio solution file
-- **`Source/QualityBionicsRemastered/QualityBionicsRemastered.csproj`** - Main mod project
-- **`Source/QualityBionics/QualityBionics.csproj`** - Backward compatibility project
+- **`Source/QualityBionicsRemastered/QualityBionicsRemastered.csproj`** - Single unified project
 - **`build.bat`** - Cross-platform build script
 - **`.vscode/build.ps1`** - VS Code/PowerShell build script
 
-### Namespaces
+### Unified Namespace Structure
 
 - **Primary Namespace**: `QualityBionicsRemastered`
-  - This should be used for all new development
+  - Used consistently throughout the entire codebase
   - Maintains compatibility across future forks
   
-- **Legacy Namespace**: `QualityBionics` 
-  - Used only for backward compatibility
-  - Contains type forwarding for EBF compatibility
+- **Backward Compatibility**: Implemented through wrapper classes in the `QualityBionics` namespace
+  - Located in `BackwardCompatibility/EBF_BackCompatibility.cs`
+  - Provides compatibility for EBF and other mods expecting the old namespace
+  - Both `QualityBionics.dll` and `QualityBionicsRemastered.dll` are generated (identical content)
 
 ### Building the Project
 
@@ -49,6 +49,10 @@ Built assemblies are placed in:
 - `1.5/Assemblies/` - RimWorld 1.5 compatible assemblies
 - `1.6/Assemblies/` - RimWorld 1.6 compatible assemblies
 
+Both folders contain:
+- `QualityBionicsRemastered.dll` - Main assembly
+- `QualityBionics.dll` - Backward compatibility copy (identical to main assembly)
+
 ### Dependencies
 
 The project uses:
@@ -65,10 +69,11 @@ The project supports building for multiple RimWorld versions through:
 
 ### Development Notes
 
-1. **Namespace Consistency**: Always use `QualityBionicsRemastered` for new code
-2. **Clean Builds**: Use `dotnet clean` before building if you encounter issues
-3. **Visual Studio Integration**: The solution is now fully compatible with Visual Studio IntelliSense and debugging
-4. **Backward Compatibility**: The `QualityBionics` project maintains compatibility with existing saves and other mods
+1. **Unified Namespace**: All new code uses `QualityBionicsRemastered` namespace consistently
+2. **Single Project**: No more multiple project complexity - everything builds from one project
+3. **Backward Compatibility**: Automatically maintained through wrapper classes
+4. **Visual Studio Integration**: Full IntelliSense and debugging support
+5. **Legacy Support**: Both assembly names are generated for maximum compatibility
 
 ### Troubleshooting
 

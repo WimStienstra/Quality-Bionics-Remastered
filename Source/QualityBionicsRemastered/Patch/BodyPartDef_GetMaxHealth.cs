@@ -1,6 +1,6 @@
 using System.Linq;
 using HarmonyLib;
-using QualityBionics;
+using QualityBionicsRemastered.Comps;
 using QualityBionicsRemastered.Core;
 using Verse;
 

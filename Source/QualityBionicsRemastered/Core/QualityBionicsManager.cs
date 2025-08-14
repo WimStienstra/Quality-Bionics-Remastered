@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
-using QualityBionics;
+using QualityBionicsRemastered.Comps;
 using QualityBionicsRemastered;
 
 namespace QualityBionicsRemastered.Core

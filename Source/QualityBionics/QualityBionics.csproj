@@ -12,7 +12,7 @@
         <VersionPrefix>0.2.1</VersionPrefix>
 
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
         <!-- Intellisense doesn't work without specifying this, but allow override from environment -->
         <RimWorldVersion Condition="'$(RimWorldVersion)' == ''">1.5</RimWorldVersion>
@@ -29,6 +29,11 @@
         <Optimize>false</Optimize>
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Include only the backward compatibility file from the main project -->
+        <Compile Include="../QualityBionicsRemastered/BackwardCompatibility/EBF_BackCompatibility.cs" />
+    </ItemGroup>
 
 
 
