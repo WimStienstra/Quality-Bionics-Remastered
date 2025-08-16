@@ -59,6 +59,7 @@ The project uses:
 - **.NET Framework 4.7.2** - Required by RimWorld
 - **Krafs.Rimworld.Ref** - RimWorld API references (version-specific)
 - **Lib.Harmony 2.2.2** - Runtime patching framework
+- **Vectorial1024.EliteBionicsFrameworkAPI** - Minimal Elite Bionics Framework references (standalone)
 
 ### Multi-Version Support
 
