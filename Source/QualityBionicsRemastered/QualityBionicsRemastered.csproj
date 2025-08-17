@@ -61,11 +61,8 @@
         <PackageReference Include="Lib.Harmony" Version="2.2.2">
             <ExcludeAssets>runtime</ExcludeAssets>
         </PackageReference>
+        <PackageReference Include="Vectorial1024.EliteBionicsFrameworkAPI" Version="1.0.0">
+          <ExcludeAssets>runtime</ExcludeAssets>
+        </PackageReference>
     </ItemGroup>
-
-    <!-- Create a copy of the assembly with the legacy name for backward compatibility -->
-    <Target Name="CreateLegacyAssembly" AfterTargets="Build">
-        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFiles="$(OutputPath)QualityBionics.dll" />
-        <Message Text="Created legacy assembly: $(OutputPath)QualityBionics.dll" Importance="high" />
-    </Target>
 </Project>

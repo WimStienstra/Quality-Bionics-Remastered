@@ -16,11 +16,6 @@ This project has been completely restructured to follow Visual Studio convention
 - **Primary Namespace**: `QualityBionicsRemastered`
   - Used consistently throughout the entire codebase
   - Maintains compatibility across future forks
-  
-- **Backward Compatibility**: Implemented through wrapper classes in the `QualityBionics` namespace
-  - Located in `BackwardCompatibility/EBF_BackCompatibility.cs`
-  - Provides compatibility for EBF and other mods expecting the old namespace
-  - Both `QualityBionics.dll` and `QualityBionicsRemastered.dll` are generated (identical content)
 
 ### Building the Project
 
@@ -51,7 +46,6 @@ Built assemblies are placed in:
 
 Both folders contain:
 - `QualityBionicsRemastered.dll` - Main assembly
-- `QualityBionics.dll` - Backward compatibility copy (identical to main assembly)
 
 ### Dependencies
 
@@ -59,6 +53,7 @@ The project uses:
 - **.NET Framework 4.7.2** - Required by RimWorld
 - **Krafs.Rimworld.Ref** - RimWorld API references (version-specific)
 - **Lib.Harmony 2.2.2** - Runtime patching framework
+- **Vectorial1024.EliteBionicsFrameworkAPI** - Minimal Elite Bionics Framework references (standalone)
 
 ### Multi-Version Support
 
@@ -71,9 +66,7 @@ The project supports building for multiple RimWorld versions through:
 
 1. **Unified Namespace**: All new code uses `QualityBionicsRemastered` namespace consistently
 2. **Single Project**: No more multiple project complexity - everything builds from one project
-3. **Backward Compatibility**: Automatically maintained through wrapper classes
-4. **Visual Studio Integration**: Full IntelliSense and debugging support
-5. **Legacy Support**: Both assembly names are generated for maximum compatibility
+3. **Visual Studio Integration**: Full IntelliSense and debugging support
 
 ### Troubleshooting
 

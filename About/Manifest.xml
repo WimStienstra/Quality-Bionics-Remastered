@@ -4,6 +4,7 @@
     <version>0.3.0</version>
     <dependencies>
         <li>brrainz.harmony</li>
+        <li>V1024.EBFramework</li>
     </dependencies>
     <manifestUri>
         https://raw.githubusercontent.com/WimStienstra/Quality-Bionics-Continued/main/About/Manifest.xml</manifestUri>
