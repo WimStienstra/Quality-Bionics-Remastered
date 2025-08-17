@@ -2,9 +2,8 @@
 
 <ModMetaData>
     <name>Quality Bionics Remastered</name>
-    <author>RebelRabbit, Taranchuk, ilyvion, AssassinsBro</author>
+    <author>RebelRabbit, Taranchuk, ilyvion, Vectorial1024, AssassinsBro</author>
     <supportedVersions>
-        <li>1.5</li>
         <li>1.6</li>
     </supportedVersions>
     <packageId>assassinsbro.qualitybionicsremastered</packageId>
@@ -38,7 +37,7 @@ This is a complete rewrite of the original mod with:
 - Modern thread-safe architecture
 - Non-destructive patching for better mod compatibility
 - Improved performance and stability
-- Dual RimWorld 1.5/1.6 support
+- RimWorld 1.6 support
 - Enhanced error handling and logging
 - Improved compatibility with other mods via the Elite Bionics Framework
     </description>
