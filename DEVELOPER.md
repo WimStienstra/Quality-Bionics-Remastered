@@ -17,6 +17,11 @@ This project has been completely restructured to follow Visual Studio convention
   - Used consistently throughout the entire codebase
   - Maintains compatibility across future forks
 
+- **Backward Compatibility**: Implemented through wrapper classes in both the `QualityBionics` namespace and the `QualityBionicsContinued` namespace
+  - Located in `BackwardCompatibility/EBF_BackCompatibility.cs`
+  - Provides compatibility for EBF 1.5 expecting the old namespace
+  - Both `QualityBionicsContinued.dll` and `QualityBionicsRemastered.dll` are generated (identical content)
+
 ### Building the Project
 
 #### Option 1: Visual Studio
@@ -46,6 +51,7 @@ Built assemblies are placed in:
 
 Both folders contain:
 - `QualityBionicsRemastered.dll` - Main assembly
+- `QualityBionicsContinued.dll` - Backward compatibility copy (identical to main assembly)
 
 ### Dependencies
 
@@ -66,7 +72,8 @@ The project supports building for multiple RimWorld versions through:
 
 1. **Unified Namespace**: All new code uses `QualityBionicsRemastered` namespace consistently
 2. **Single Project**: No more multiple project complexity - everything builds from one project
-3. **Visual Studio Integration**: Full IntelliSense and debugging support
+3. **Legacy Support**: Automatically maintained through wrapper classes, for RW 1.5 users
+4. **Visual Studio Integration**: Full IntelliSense and debugging support
 
 ### Troubleshooting
 
