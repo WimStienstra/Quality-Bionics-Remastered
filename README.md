@@ -79,6 +79,7 @@ Prostheses at bionic level and above now have quality levels that affect the eff
 ### ✅ **Improved Compatibility**
 - **Better Mod Integration**: Non-destructive patches won't interfere with other bionic mods
 - **EBF Dependency**: Now uses Elite Bionics Framework to deliver max HP buffs/debuffs
+  - Note: compatibility with EBF 1.5 is still maintained as legacy support
 - **Community Unification**: Mod now works correctly with dozens of other mods, as backed by the EBF
 - **Save Game Safe**: Can be safely added to existing saves
 
