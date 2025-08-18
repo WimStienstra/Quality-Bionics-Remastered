@@ -65,4 +65,10 @@
           <ExcludeAssets>runtime</ExcludeAssets>
         </PackageReference>
     </ItemGroup>
+	
+	<!-- Create a copy of the assembly with the legacy name for backward compatibility -->
+	<Target Name="CreateLegacyAssembly" AfterTargets="Build">
+		<Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFiles="$(OutputPath)QualityBionicsContinued.dll" />
+		<Message Text="Created legacy assembly: $(OutputPath)QualityBionicsContinued.dll" Importance="high" />
+	</Target>
 </Project>
