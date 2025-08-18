@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+    <QualityBionicsRemastered.BodyPartEfficiencyMultipliers>Lichaamsonderdeel efficiëntie vermenigvuldigers: </QualityBionicsRemastered.BodyPartEfficiencyMultipliers>
+    <QualityBionicsRemastered.BodyPartHPMultipliers>Lichaamsonderdeel HP vermenigvuldigers: </QualityBionicsRemastered.BodyPartHPMultipliers>
+    <QualityBionicsRemastered.CurMinTechLevelForBionics>Huidig minimum technologieniveau voor kwaliteits-bionica: {0}</QualityBionicsRemastered.CurMinTechLevelForBionics>
+    <QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>Selecteer minimum technologieniveau voor kwaliteits-bionica</QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>
+    <QualityBionicsRemastered.PartEfficiency>Onderdeel efficiëntie</QualityBionicsRemastered.PartEfficiency>
+    <QualityBionicsRemastered.QualityBonus>Kwaliteitsbonus</QualityBionicsRemastered.QualityBonus>
+    <QualityBionicsRemastered.HPMultiplier>HP vermenigvuldiger</QualityBionicsRemastered.HPMultiplier>
+</LanguageData>

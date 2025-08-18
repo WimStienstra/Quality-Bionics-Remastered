@@ -35,16 +35,16 @@ public static class Thing_GetInspectString
             if (sb.Length > 0) sb.AppendLine();
 
             // Add efficiency information
-            sb.AppendLine($"Part efficiency: {(finalEfficiency * 100f):F0}%");
+            sb.AppendLine($"{"QualityBionicsRemastered.PartEfficiency".Translate()}: {(finalEfficiency * 100f):F0}%");
             
             if (qualityMultiplier != 1f)
             {
-                sb.AppendLine($"Quality bonus: {((qualityMultiplier - 1f) * 100f):+0;-0;0}%");
+                sb.AppendLine($"{"QualityBionicsRemastered.QualityBonus".Translate()}: {((qualityMultiplier - 1f) * 100f):+0;-0;0}%");
             }
 
             if (hpMultiplier != 1f)
             {
-                sb.AppendLine($"HP multiplier: {(hpMultiplier * 100f):F0}%");
+                sb.AppendLine($"{"QualityBionicsRemastered.HPMultiplier".Translate()}: {(hpMultiplier * 100f):F0}%");
             }
 
             __result = sb.ToString().TrimEnd();

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+    <QualityBionicsRemastered.BodyPartEfficiencyMultipliers>Множители эффективности частей тела: </QualityBionicsRemastered.BodyPartEfficiencyMultipliers>
+    <QualityBionicsRemastered.BodyPartHPMultipliers>Множители HP частей тела: </QualityBionicsRemastered.BodyPartHPMultipliers>
+    <QualityBionicsRemastered.CurMinTechLevelForBionics>Текущий минимальный технологический уровень для качественной бионики: {0}</QualityBionicsRemastered.CurMinTechLevelForBionics>
+    <QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>Выбрать минимальный технологический уровень для качественной бионики</QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>
+    <QualityBionicsRemastered.PartEfficiency>Эффективность части</QualityBionicsRemastered.PartEfficiency>
+    <QualityBionicsRemastered.QualityBonus>Бонус качества</QualityBionicsRemastered.QualityBonus>
+    <QualityBionicsRemastered.HPMultiplier>Множитель HP</QualityBionicsRemastered.HPMultiplier>
+</LanguageData>
