@@ -22,6 +22,16 @@
             <downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=1665403571</downloadUrl>
         </li>
     </modDependencies>
+    <modDependenciesByVersion>
+        <v1.5>
+            <li>
+                <packageId>brrainz.harmony</packageId>
+                <displayName>Harmony</displayName>
+                <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+                <downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</downloadUrl>
+            </li>
+        </v1.5>
+    </modDependenciesByVersion>
     <loadAfter>
         <li>brrainz.harmony</li>
         <li>V1024.EBFramework</li>
