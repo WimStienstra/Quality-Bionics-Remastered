@@ -1,4 +1,4 @@
-[![RimWorld 1.5](https://img.shields.io/badge/RimWorld-1.5-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/WimStienstra/Quality-Bionics-Continued/actions/workflows/build.yml/badge.svg)](https://github.com/WimStienstra/Quality-Bionics-Continued/actions/workflows/build.yml)
+[![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/WimStienstra/Quality-Bionics-Continued/actions/workflows/build.yml/badge.svg)](https://github.com/WimStienstra/Quality-Bionics-Continued/actions/workflows/build.yml)
 
 # Quality Bionics Remastered
 
@@ -26,7 +26,7 @@ The project has been restructured to use proper Visual Studio project convention
 
 #### Using Command Line
 ```batch
-# Build for both RimWorld 1.5 and 1.6
+# Build for both RimWorld 1.6
 .\build.bat
 
 # Or build manually for specific version
