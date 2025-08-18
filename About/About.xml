@@ -40,5 +40,6 @@ This is a complete rewrite of the original mod with:
 - RimWorld 1.6 support
 - Enhanced error handling and logging
 - Improved compatibility with other mods via the Elite Bionics Framework
+- Native translations included: Spanish, German, Dutch, Portuguese, Russian and Simplified Chinese (by Ta)
     </description>
 </ModMetaData>
