@@ -81,3 +81,4 @@ The project supports building for multiple RimWorld versions through:
 - **Missing References**: Run `dotnet restore` to restore NuGet packages
 - **Version Issues**: Check that `RimWorldVersion` environment variable is set correctly
 - **Path Issues**: Ensure you're building from the project root directory
+- **Mod Compatibility**: Animal prosthetics from "A Dog Said" mod are automatically excluded via mod package ID to prevent crashes

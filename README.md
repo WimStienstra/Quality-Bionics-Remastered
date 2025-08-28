@@ -76,6 +76,7 @@ Prostheses at bionic level and above now have quality levels that affect the eff
 - **EBF Dependency**: Now uses Elite Bionics Framework to deliver max HP buffs/debuffs
   - Note: compatibility with EBF 1.5 is still maintained as legacy support
 - **Community Unification**: Mod now works correctly with dozens of other mods, as backed by the EBF
+- **Animal Prosthetics**: Compatible with "A Dog Said... Animal Prosthetics 2" - automatically excludes animal bionics from quality system
 - **Save Game Safe**: Can be safely added to existing saves
 
 ## License

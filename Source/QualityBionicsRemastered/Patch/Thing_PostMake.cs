@@ -18,6 +18,9 @@ public static class Thing_PostMake
         try
         {
             if (__instance?.def == null) return;
+            
+            // Early exit if not on main thread to avoid Unity threading issues
+            if (!UnityEngine.Application.isPlaying) return;
 
             // Only process things that are tech hediffs
             if (!__instance.def.isTechHediff) return;
@@ -31,11 +34,10 @@ public static class Thing_PostMake
             
             // Check if the thing has CompQuality component
             var hasCompQuality = __instance.HasComp<CompQuality>();
-            // QualityBionicsMod.Message($"{__instance.def.defName} has CompQuality component: {hasCompQuality}");
+            if (!hasCompQuality) return;
 
             // Generate random quality and apply it
             var randomQuality = GenerateRandomQuality();
-            // QualityBionicsMod.Message($"Attempting to apply quality {randomQuality} to {__instance.def.defName}");
             
             if (QualityBionicsManager.TryApplyQuality(__instance, randomQuality))
             {
@@ -48,7 +50,7 @@ public static class Thing_PostMake
         }
         catch (System.Exception ex)
         {
-            QualityBionicsMod.Warning($"Error in Thing_PostMake patch: {ex.Message}");
+            QualityBionicsMod.Warning($"Error in Thing_PostMake patch for {__instance?.def?.defName}: {ex.Message}");
         }
     }
 

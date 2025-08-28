@@ -27,6 +27,19 @@ namespace QualityBionicsRemastered.Core
             if (!hediffDef.spawnThingOnRemoved.isTechHediff) 
                 return false;
 
+            // Check if this hediff is from an excluded mod
+            var modContentPack = hediffDef.modContentPack;
+            if (modContentPack != null && Settings.excludedModPackageIds.Contains(modContentPack.PackageId))
+            {
+                return false;
+            }
+            
+            // Check if this specific hediff is excluded
+            if (Settings.excludedHediffDefs.Contains(hediffDef.defName))
+            {
+                return false;
+            }
+
             var defName = hediffDef.defName.ToLowerInvariant();
             
             // Check for known bionic types
