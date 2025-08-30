@@ -81,3 +81,6 @@ The project supports building for multiple RimWorld versions through:
 - **Missing References**: Run `dotnet restore` to restore NuGet packages
 - **Version Issues**: Check that `RimWorldVersion` environment variable is set correctly
 - **Path Issues**: Ensure you're building from the project root directory
+
+### Mod Compatibility Information
+Compatibility with Elite Bionics Framework for RW 1.5 is still managed by EBF, as per usual for previous Quality Bionics editions.
