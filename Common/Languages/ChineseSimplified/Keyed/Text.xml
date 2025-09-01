@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<QualityBionicsRemastered.BodyPartEfficiencyMultipliers>身体部件效率乘数：</QualityBionicsRemastered.BodyPartEfficiencyMultipliers>
+	<QualityBionicsRemastered.BodyPartHPMultipliers>身体部件生命值乘数：</QualityBionicsRemastered.BodyPartHPMultipliers>
+	<QualityBionicsRemastered.CurMinTechLevelForBionics>当前品质仿生部件的最低科技等级：{0}</QualityBionicsRemastered.CurMinTechLevelForBionics>
+	<QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>选择品质仿生部件的最低科技等级</QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>
+	<QualityBionicsRemastered.PartEfficiency>部件效率</QualityBionicsRemastered.PartEfficiency>
+	<QualityBionicsRemastered.QualityBonus>品质加成</QualityBionicsRemastered.QualityBonus>
+	<QualityBionicsRemastered.HPMultiplier>生命值乘数</QualityBionicsRemastered.HPMultiplier>
+</LanguageData>

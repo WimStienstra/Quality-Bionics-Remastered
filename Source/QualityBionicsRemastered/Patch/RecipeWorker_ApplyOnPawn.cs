@@ -21,23 +21,63 @@ internal static class AddQualityToImplants
 
     static AddQualityToImplants()
     {
-        foreach (var hediff in DefDatabase<HediffDef>.AllDefs)
+        try
         {
-            if (hediff.spawnThingOnRemoved != null && hediff.spawnThingOnRemoved.isTechHediff && hediff.addedPartProps != null)
+            // QualityBionicsMod.Message("Adding quality components to eligible hediffs...");
+            int processedCount = 0;
+            int skippedModExclusionCount = 0;
+            
+            foreach (var hediff in DefDatabase<HediffDef>.AllDefs)
             {
-                var defName = hediff.defName.ToLower();
-                if (defName.Contains("bionic") || defName.Contains("archotech") || customHediffDefs.Contains(hediff.defName)
-                        || hediff.spawnThingOnRemoved.techLevel >= Settings.minTechLevelForQuality)
+                if (hediff.spawnThingOnRemoved != null && hediff.spawnThingOnRemoved.isTechHediff && hediff.addedPartProps != null)
                 {
-                    hediff.comps ??= new List<HediffCompProperties>();
-                    hediff.comps.Add(new HediffCompProperties_QualityBionics() { baseEfficiency = hediff.addedPartProps.partEfficiency });
-                    hediff.spawnThingOnRemoved.comps ??= new List<CompProperties>();
-                    if (!hediff.spawnThingOnRemoved.comps.Any(x => x.compClass == typeof(CompQuality)))
+                    // Check if this hediff is from an excluded mod
+                    var modContentPack = hediff.modContentPack;
+                    if (modContentPack != null && Settings.excludedModPackageIds.Contains(modContentPack.PackageId))
                     {
-                        hediff.spawnThingOnRemoved.comps.Add(new CompProperties { compClass = typeof(CompQuality) });
+                        skippedModExclusionCount++;
+                        // QualityBionicsMod.Message($"Skipping hediff from excluded mod {modContentPack.PackageId}: {hediff.defName}");
+                        continue;
+                    }
+                    
+                    // Check if this specific hediff is excluded
+                    if (Settings.excludedHediffDefs.Contains(hediff.defName))
+                    {
+                        // QualityBionicsMod.Message($"Skipping explicitly excluded hediff: {hediff.defName}");
+                        continue;
+                    }
+                    
+                    var defName = hediff.defName.ToLowerInvariant();
+                    
+                    // Check if this is eligible for quality bionics
+                    bool isEligible = false;
+                    if (defName.Contains("bionic") || defName.Contains("archotech"))
+                        isEligible = true;
+                    else if (customHediffDefs.Contains(hediff.defName))
+                        isEligible = true;
+                    else if (hediff.spawnThingOnRemoved.techLevel >= Settings.minTechLevelForQuality)
+                        isEligible = true;
+                    
+                    if (isEligible)
+                    {
+                        hediff.comps ??= new List<HediffCompProperties>();
+                        hediff.comps.Add(new HediffCompProperties_QualityBionics() { baseEfficiency = hediff.addedPartProps.partEfficiency });
+                        hediff.spawnThingOnRemoved.comps ??= new List<CompProperties>();
+                        if (!hediff.spawnThingOnRemoved.comps.Any(x => x.compClass == typeof(CompQuality)))
+                        {
+                            hediff.spawnThingOnRemoved.comps.Add(new CompProperties { compClass = typeof(CompQuality) });
+                        }
+                        processedCount++;
+                        QualityBionicsMod.Message($"Added quality to: {hediff.defName} ({hediff.label})");
                     }
                 }
             }
+            
+            QualityBionicsMod.Message($"Quality component initialization complete. Processed: {processedCount}, Skipped excluded mods: {skippedModExclusionCount}");
+        }
+        catch (Exception ex)
+        {
+            QualityBionicsMod.Error($"Error during hediff initialization: {ex}");
         }
     }
 }

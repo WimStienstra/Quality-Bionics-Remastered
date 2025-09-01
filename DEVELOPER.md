@@ -83,4 +83,5 @@ The project supports building for multiple RimWorld versions through:
 - **Path Issues**: Ensure you're building from the project root directory
 
 ### Mod Compatibility Information
-Compatibility with Elite Bionics Framework for RW 1.5 is still managed by EBF, as per usual for previous Quality Bionics editions.
+- Compatibility with Elite Bionics Framework for RW 1.5 is still managed by EBF, as per usual for previous Quality Bionics editions.
+- Animal prosthetics from "A Dog Said" mod are automatically excluded via mod package ID to prevent crashes

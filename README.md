@@ -1,4 +1,4 @@
-[![RimWorld 1.5](https://img.shields.io/badge/RimWorld-1.5-brightgreen.svg)](http://rimworldgame.com/) [![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/WimStienstra/Quality-Bionics-Continued/actions/workflows/build.yml/badge.svg)](https://github.com/WimStienstra/Quality-Bionics-Continued/actions/workflows/build.yml)
+[![RimWorld 1.6](https://img.shields.io/badge/RimWorld-1.6-brightgreen.svg)](http://rimworldgame.com/) [![Build](https://github.com/WimStienstra/Quality-Bionics-Continued/actions/workflows/build.yml/badge.svg)](https://github.com/WimStienstra/Quality-Bionics-Continued/actions/workflows/build.yml)
 
 # Quality Bionics Remastered
 
@@ -12,11 +12,6 @@
 
 The project has been restructured to use proper Visual Studio project conventions:
 
-- **Solution File**: `QualityBionics-Continued.sln` (in root directory)
-- **Projects**:
-  - `Source/QualityBionicsRemastered/` - Main mod functionality (namespace: `QualityBionicsRemastered`)
-  - `Source/QualityBionics/` - Backward compatibility layer (namespace: `QualityBionics`)
-
 ### Building the Mod
 
 #### Using Visual Studio
@@ -26,11 +21,11 @@ The project has been restructured to use proper Visual Studio project convention
 
 #### Using Command Line
 ```batch
-# Build for both RimWorld 1.5 and 1.6
+# Build for RimWorld 1.6
 .\build.bat
 
 # Or build manually for specific version
-set RimWorldVersion=1.5
+set RimWorldVersion=1.6
 dotnet build QualityBionics-Continued.sln --configuration Release
 ```
 
@@ -66,14 +61,14 @@ Prostheses at bionic level and above now have quality levels that affect the eff
 - **Better Tooltips**: Detailed quality information in bionic tooltips
 - **Improved Stats Display**: Custom stats reports showing quality effects
 - **Smart Quality Detection**: Automatic detection of quality-eligible bionics
-- **Dual Version Support**: Full compatibility with both RimWorld 1.5 and 1.6
 
 ### 🛠️ **Under the Hood**
 - Replaced destructive prefix/postfix patches with safe postfix-only approach
 - Eliminated static global variables that caused thread safety issues
 - Implemented proper separation of concerns with dedicated manager classes
 - Added comprehensive unit testing and error recovery systems
-
+- Native translations included: Spanish, German, Dutch, Portuguese, Russian and Simplified Chinese (by Ta) (changes are welcome via PR's)
+  
 ## Compatibility
 
 ### ✅ **Improved Compatibility**
@@ -81,6 +76,7 @@ Prostheses at bionic level and above now have quality levels that affect the eff
 - **EBF Dependency**: Now uses Elite Bionics Framework to deliver max HP buffs/debuffs
   - Note: compatibility with EBF 1.5 is handled by EBF; please contact them if there are problems with 1.5 compatibility
 - **Community Unification**: Mod now works correctly with dozens of other mods, as backed by the EBF
+- **Animal Prosthetics**: Compatible with "A Dog Said... Animal Prosthetics 2" - automatically excludes animal bionics from quality system
 - **Save Game Safe**: Can be safely added to existing saves
 
 ## License

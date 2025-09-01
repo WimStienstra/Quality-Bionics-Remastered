@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+    <QualityBionicsRemastered.BodyPartEfficiencyMultipliers>Multiplicadores de eficiencia de partes corporales: </QualityBionicsRemastered.BodyPartEfficiencyMultipliers>
+    <QualityBionicsRemastered.BodyPartHPMultipliers>Multiplicadores de HP de partes corporales: </QualityBionicsRemastered.BodyPartHPMultipliers>
+    <QualityBionicsRemastered.CurMinTechLevelForBionics>Nivel tecnológico mínimo actual para biónica de calidad: {0}</QualityBionicsRemastered.CurMinTechLevelForBionics>
+    <QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>Seleccionar nivel tecnológico mínimo para biónica de calidad</QualityBionicsRemastered.SelectMinTechLevelForQualityBionics>
+    <QualityBionicsRemastered.PartEfficiency>Eficiencia de la parte</QualityBionicsRemastered.PartEfficiency>
+    <QualityBionicsRemastered.QualityBonus>Bonificación de calidad</QualityBionicsRemastered.QualityBonus>
+    <QualityBionicsRemastered.HPMultiplier>Multiplicador de HP</QualityBionicsRemastered.HPMultiplier>
+</LanguageData>

@@ -10,6 +10,18 @@ namespace QualityBionicsRemastered
     class Settings : ModSettings
     {
         public static TechLevel minTechLevelForQuality = TechLevel.Industrial;
+        
+        // List of hediff defNames to exclude from quality processing
+        public static HashSet<string> excludedHediffDefs = new HashSet<string>();
+        
+        // List of mod package IDs to exclude from quality processing
+        public static HashSet<string> excludedModPackageIds = new HashSet<string>
+        {
+            "SamBucher.ADogSaidAnimalProsthetics2", // A Dog Said mod - correct package ID
+            "adogsaid.animalprosthetics", // Alternative package ID format (legacy)
+            // Add more problematic mods here as needed
+        };
+        
         public static Dictionary<QualityCategory, float> qualityMultipliers = new Dictionary<QualityCategory, float>
         {
             {QualityCategory.Awful, 0.50f},
