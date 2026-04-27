@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <!-- Register our GameComponent so RimWorld creates it for every save -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/GameDef/gameComponents</xpath>
+    <value>
+      <li Class="QualityBionicsRemastered.Core.QualityBionicsGameComponent" />
+    </value>
+  </Operation>
+</Patch>

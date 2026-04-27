@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.4] - 2026-04-27
+
+### Fixed
+- **Mid-game save migration**: Adding the mod to an existing save no longer causes stored bionics on the ground or in pawn inventories to default to Awful quality. They are now migrated to Normal quality on first load.
+
 ## [0.3.3] - 2025-08-18
 - **Translations**: Added Simplified Chinese translation of Ta. And added other translations with the use of AI, checked German, Dutch and Spanish. I think they're okay, maybe there are some better wording possibilities, so PR's are welcome.
 

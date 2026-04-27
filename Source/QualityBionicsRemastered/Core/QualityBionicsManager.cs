@@ -166,5 +166,94 @@ namespace QualityBionicsRemastered.Core
         {
             return hediffDef?.spawnThingOnRemoved;
         }
+
+        /// <summary>
+        /// Migrate existing stored bionics in saves to Normal quality on first load.
+        /// This ensures that when the mod is added mid-game, existing stored bionics get Normal quality
+        /// instead of the C# default enum value (Awful = 0) that CompQuality initializes to when
+        /// it is dynamically added to a ThingDef for an already-saved item.
+        /// </summary>
+        public static void MigrateExistingBionics()
+        {
+            try
+            {
+                int migratedCount = 0;
+
+                foreach (var map in Find.Maps)
+                {
+                    if (map == null) continue;
+
+                    // Migrate things on the map (ground, stockpiles, shelves, etc.)
+                    if (map.listerThings != null)
+                    {
+                        // ToList() to avoid modifying collection during iteration
+                        var allThings = map.listerThings.AllThings.ToList();
+                        foreach (var thing in allThings)
+                        {
+                            if (MigrateThing(thing))
+                                migratedCount++;
+                        }
+                    }
+
+                    // Migrate things in pawn inventories
+                    foreach (var pawn in map.mapPawns.AllPawns)
+                    {
+                        if (pawn?.inventory?.innerContainer == null) continue;
+                        foreach (var item in pawn.inventory.innerContainer)
+                        {
+                            if (MigrateThing(item))
+                                migratedCount++;
+                        }
+                    }
+                }
+
+                if (migratedCount > 0)
+                {
+                    QualityBionicsMod.Message($"Migration complete: Applied Normal quality to {migratedCount} existing stored bionics");
+                }
+            }
+            catch (Exception ex)
+            {
+                QualityBionicsMod.Warning($"Error during bionic migration: {ex.Message}\n{ex.StackTrace}");
+            }
+        }
+
+        /// <summary>
+        /// Checks whether a thing needs migration and applies Normal quality if so.
+        /// Returns true if quality was migrated.
+        /// </summary>
+        private static bool MigrateThing(Thing thing)
+        {
+            if (thing?.def == null) return false;
+            if (!thing.def.isTechHediff) return false;
+
+            var correspondingHediff = FindCorrespondingHediffDef(thing.def);
+            if (correspondingHediff == null || !IsQualityEligible(correspondingHediff)) return false;
+
+            var compQuality = thing.TryGetComp<CompQuality>();
+            if (compQuality == null) return false;
+
+            // When CompQuality is dynamically added to an already-saved ThingDef, it initializes
+            // to the C# default enum value of QualityCategory (0 = Awful). We detect this case
+            // by checking for Awful quality and upgrading to Normal. Items that already had a
+            // quality legitimately set (Good, Excellent, etc.) are left untouched.
+            if (thing.TryGetQuality(out var quality) && quality != QualityCategory.Awful)
+                return false;
+
+            return TryApplyQuality(thing, QualityCategory.Normal);
+        }
+
+        /// <summary>
+        /// Find the HediffDef that would spawn this ThingDef when removed.
+        /// </summary>
+        private static HediffDef? FindCorrespondingHediffDef(ThingDef thingDef)
+        {
+            foreach (var hediffDef in DefDatabase<HediffDef>.AllDefs)
+            {
+                if (hediffDef.spawnThingOnRemoved == thingDef)
+                    return hediffDef;
+            }
+            return null;
+        }
     }
 }
